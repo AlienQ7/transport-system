@@ -1,10 +1,10 @@
 import { Hono } from "hono";
 import { cors } from "hono/cors";
-import auth from "./routes/auth";
+import auth from "../routes/auth";
 import { authMiddleware } from "./middleware/auth";
-import routes from "./routes/routes";
-import vehicles from "./routes/vehicles";
-import bookings from "./routes/bookings";
+import routes from "../routes/routes";
+import vehicles from "../routes/vehicles";
+import bookings from "../routes/bookings";
 
 type Bindings = {
   transport_db: D1Database;
