@@ -11,8 +11,9 @@
     },
   });
 }*/
+const API_URL = "https://transport-system.celestialq7.workers.dev";
 
-const API_URL = "https://transport-backend.pages.dev";returnort async function apiFetch(url, options = {}) {
+export async function apiFetch(url, options = {}) {
   const token = localStorage.getItem("token");
 
   return fetch(`${API_URL}${url}`, {
