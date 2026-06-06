@@ -1,5 +1,6 @@
 import { Hono } from "hono";
-import { authMiddleware } from "../middleware/auth";
+//import { authMiddleware } from "../middleware/auth";
+import { authMiddleware } from "../src/middleware/auth";
 
 const vehicles = new Hono();
 
