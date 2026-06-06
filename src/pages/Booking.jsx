@@ -208,11 +208,11 @@ export default function Booking() {
                 <div className="d-flex flex-column gap-2">
                   <div className="meta-schedule-box d-flex justify-content-between align-items-center">
                     <span className="small text-secondary fw-medium">📅 Travel Date</span>
-                    <span className="small fw-semibold text-light">{travelDate || "2026-06-08"}</span>
+                    <span className="small fw-semibold text-light">{travelDate}</span>
                   </div>
                   <div className="meta-schedule-box d-flex justify-content-between align-items-center">
                     <span className="small text-secondary fw-medium">⏰ Departure</span>
-                    <span className="small fw-semibold text-light">{departureTime || "10:00"}</span>
+                    <span className="small fw-semibold text-light">{departureTime}</span>
                   </div>
                 </div>
 
