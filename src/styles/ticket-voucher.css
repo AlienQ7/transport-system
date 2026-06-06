@@ -1,0 +1,96 @@
+:root {
+  --bg-app-dark: #12141c;
+  --bg-card-dark: #1a1d29;
+  --border-muted: rgba(255, 255, 255, 0.08);
+  --text-main: #ffffff;
+  --text-muted: #a0aec0;
+  --accent-gold: #ffd700;
+  --accent-gold-hover: #e6c200;
+  --success-green: #2ecc71;
+  --pending-orange: #e67e22;
+}
+
+/* Page Core Wrapper Layout */
+.ticket-page-wrapper {
+  background-color: var(--bg-app-dark);
+  min-height: 100vh;
+  width: 100%;
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+/* The exact bounding box that gets screenshotted/printed */
+.ticket-voucher-card {
+  background-color: var(--bg-card-dark) !important;
+  border: 1px solid var(--border-muted) !important;
+  border-radius: 16px !important;
+  color: var(--text-main) !important;
+  overflow: hidden;
+}
+
+/* Modern Header Banner for Voucher Card */
+.ticket-card-header {
+  background: linear-gradient(135deg, #1e2235 0%, #151824 100%);
+  border-bottom: 1px solid var(--border-muted);
+  padding: 24px;
+}
+
+/* Custom QR Housing Frame Box */
+.ticket-qr-container {
+  background-color: #ffffff;
+  padding: 14px;
+  border-radius: 12px;
+  display: inline-block;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Structural Metadata Grid Rows */
+.ticket-meta-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px dashed var(--border-muted);
+}
+
+.ticket-meta-row:last-of-type {
+  border-bottom: none;
+}
+
+/* Dynamic Badge Status Layout Strings */
+.status-pill-badge {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  text-uppercase: uppercase;
+}
+.status-paid {
+  background-color: rgba(46, 204, 113, 0.15);
+  color: var(--success-green);
+}
+.status-pending {
+  background-color: rgba(230, 126, 34, 0.15);
+  color: var(--pending-orange);
+}
+
+/* Premium Primary Operations Control Buttons */
+.btn-gold-action {
+  background-color:black;
+  color: white;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 20px;
+  transition: all 0.2s ease;
+}
+
+.btn-gold-action:hover {
+  box-shadow: 0 4px 12px rgba(255, 215, 0, 0.2);
+  background-color: black;
+}
+.text-gold-link {
+  color: var(--accent-gold) !important;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}

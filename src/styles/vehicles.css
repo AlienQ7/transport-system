@@ -1,0 +1,88 @@
+:root {
+  --bg-app-dark: #12141c;
+  --bg-card-dark: #1a1d29;
+  --border-muted: rgba(255, 255, 255, 0.08);
+  --text-main: #ffffff;
+  --text-muted: #a0aec0;
+  --accent-gold: #ffd700;
+  --accent-gold-hover: #e6c200;
+}
+
+/* Page Headers */
+.vehicles-page-title {
+  color: var(--accent-gold);
+  font-size: 28px;
+}
+
+/* Base Card Shell Containers */
+.vehicles-management-card {
+  background-color: var(--bg-card-dark);
+  border: 1px solid var(--border-muted);
+  border-radius: 12px;
+  color: var(--text-main);
+}
+
+/* Form Layout Inputs, Select Menus & Native Date/Time Toggles */
+.dark-form-input, .dark-form-select {
+  background-color: var(--bg-app-dark) !important;
+  border: 1px solid var(--border-muted) !important;
+  color: var(--text-main) !important;
+  border-radius: 8px !important;
+  padding: 10px 14px;
+  transition: all 0.2s ease-in-out;
+}
+
+/* Color adjustments for calendar and clock icons in dark mode */
+.dark-form-input::-webkit-calendar-picker-indicator {
+  filter: invert(1) sepia(1) saturate(5) hue-rotate(180deg);
+  cursor: pointer;
+}
+
+.dark-form-input:focus, .dark-form-select:focus {
+  border-color: var(--accent-gold) !important;
+  box-shadow: 0 0 8px rgba(255, 215, 0, 0.15) !important;
+  outline: none;
+}
+
+/* Core Form Custom Submission Buttons */
+.btn-gold-action {
+  background-color: var(--accent-gold);
+  color: #000000;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  transition: background-color 0.2s ease;
+}
+
+.btn-gold-action:hover {
+  background-color: var(--accent-gold-hover);
+  color: #000000;
+}
+
+/* Structured Admin Table Realignment */
+.custom-dark-table {
+  color: var(--text-main) !important;
+  border-color: var(--border-muted) !important;
+  vertical-align: middle;
+}
+
+.custom-dark-table thead th {
+  background-color: var(--bg-card-dark) !important;
+  color: var(--accent-gold) !important;
+  font-weight: 600;
+  border-bottom: 2px solid var(--border-muted) !important;
+  padding: 14px;
+}
+
+.custom-dark-table tbody td {
+  background-color: var(--bg-card-dark) !important;
+  color: var(--text-muted);
+  padding: 14px;
+  border-bottom: 1px solid var(--border-muted) !important;
+}
+
+.custom-dark-table tbody tr:hover td {
+  color: var(--text-main);
+  background-color: rgba(255, 255, 255, 0.02) !important;
+}

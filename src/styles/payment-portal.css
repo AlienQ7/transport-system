@@ -1,0 +1,89 @@
+:root {
+  --bg-app-dark: #12141c;
+  --bg-card-dark: #1a1d29;
+  --border-muted: rgba(255, 255, 255, 0.08);
+  --text-main: #ffffff;
+  --text-muted: #a0aec0;
+  --accent-gold: #ffd700;
+  --accent-gold-hover: #e6c200;
+}
+
+/* Page Core Title Header */
+.payment-page-title {
+  color: var(--accent-gold);
+  font-size: 28px;
+}
+
+/* Centralized Card Wrapper */
+.payment-container-card {
+  background-color: var(--bg-card-dark) !important;
+  border: 1px solid var(--border-muted) !important;
+  border-radius: 12px !important;
+  color: var(--text-main);
+}
+
+/* Premium QR Container Box */
+.qr-frame-wrapper {
+  background-color: var(--bg-app-dark);
+  border: 1px dashed rgba(255, 215, 0, 0.25);
+  border-radius: 12px;
+  padding: 16px;
+  display: inline-block;
+}
+
+/* Custom Input Field Styling */
+.payment-dark-input {
+  background-color: var(--bg-app-dark) !important;
+  border: 1px solid var(--border-muted) !important;
+  color: var(--text-main) !important;
+  border-radius: 8px !important;
+  padding: 12px 16px;
+  transition: all 0.2s ease-in-out;
+}
+
+.payment-dark-input:focus {
+  border-color: var(--accent-gold) !important;
+  box-shadow: 0 0 8px rgba(255, 215, 0, 0.15) !important;
+  outline: none;
+}
+
+/* Main Submission Button */
+.btn-gold-action {
+  background-color: var(--accent-gold);
+  color: #000000;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-size: 16px;
+  transition: all 0.2s ease;
+}
+
+.btn-gold-action:hover:not(:disabled) {
+  background-color: var(--accent-gold-hover);
+  color: #000000;
+  box-shadow: 0 4px 15px rgba(255, 215, 0, 0.2);
+}
+
+.btn-gold-action:disabled {
+  background-color: #2c2f3f;
+  color: var(--text-muted);
+  cursor: not-allowed;
+}
+
+/* Back Arrow Styling */
+.btn-back-arrow {
+  background-color: var(--bg-card-dark) !important;
+  color: var(--text-muted) !important;
+  border: 1px solid var(--border-muted) !important;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.btn-back-arrow:hover {
+  background-color: rgba(255, 215, 0, 0.05) !important;
+  color: var(--accent-gold) !important;
+  border-color: var(--accent-gold) !important;
+}
