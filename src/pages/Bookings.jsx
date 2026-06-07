@@ -297,8 +297,6 @@ export default function Bookings() {
 						)}
 						</td>
                       <td>
-                        //<button onClick={() => editBooking(booking)}>Edit</button>
-                        <button onClick={() => deleteBooking(booking.id)}>Delete</button>
                       </td>
                     </tr>
                   ))}
