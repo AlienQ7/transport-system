@@ -133,7 +133,7 @@ export default function Ticket() {
           >
             <div className="ticket-qr-container shadow">
              <QRCodeCanvas
-              value={`https://transport-system-lru.pages.dev/ticket/${booking.ticket_code}`}
+              value={`https://transport-system-lru.pages.dev/ticket-status/${booking.ticket_code}`}
                size={220}
                 />
            </div>
