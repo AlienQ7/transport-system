@@ -383,7 +383,7 @@ export default function Routes() {
               ) : (
                 routes.map((route) => (
                   <tr key={route.id}>
-                    <td className="fw-semibold text-white">#{route.id}</td>
+                    <td className="fw-semibold text-white">{route.id}</td>
                     <td>{route.source}</td>
                     <td>{route.destination}</td>
                     <td>
