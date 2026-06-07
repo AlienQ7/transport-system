@@ -1,4 +1,3 @@
-//chnageeeeeee
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { QRCodeCanvas } from "qrcode.react";
@@ -54,8 +53,7 @@ export default function Ticket() {
       190,
       0
     );
-
-    pdf.save(`ticket-₹{booking.ticket_code}.pdf`);
+    pdf.save(`ticket-${booking.ticket_code}.pdf`);
   }
   async function downloadTicketImage() {
     const ticket = document.getElementById("ticket");
@@ -64,7 +62,7 @@ export default function Ticket() {
 
     const link = document.createElement("a");
 
-    link.download = `₹{booking.ticket_code}.png`;
+    link.download = `${booking.ticket_code}.png`;
 
     link.href = canvas.toDataURL("image/png");
 
@@ -149,7 +147,6 @@ export default function Ticket() {
       {booking.ticket_code}
     </p>
   </div>
-</div>
           <div className="ticket-meta-row">
             <span className="small text-secondary fw-semibold text-uppercase tracking-wider">Passenger:</span>
             <span className="fw-bold text-light">{booking.customer_name}</span>
@@ -177,14 +174,16 @@ export default function Ticket() {
 
           <div className="ticket-meta-row">
             <span className="small text-secondary fw-semibold text-uppercase tracking-wider">Payment:</span>
-            <span className={`status-pill-badge ₹{booking.payment_status === "paid" ? "status-paid" : "status-pending"}`}>
+            <span className={`status-pill-badge ${
+  booking.payment_status === "paid"
+    ? "status-paid"
+    : "status-pending"
+}`}>
               {booking.payment_status}
             </span>
           </div>
         </div>
-
       </div>
-
       {/* OPERATIONS BUTTON LAYOUT DECK */}
       <div className="w-100 d-flex flex-column flex-sm-row gap-2" style={{ maxWidth: "520px" }}>
         <button onClick={downloadTicket} className="btn btn-gold-action flex-grow-1 shadow-sm">
