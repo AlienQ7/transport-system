@@ -289,22 +289,22 @@ export default function Routes() {
       {/* Dynamic Action Header Title Row */}
       <div className="mb-4">
         <h1 className="fw-bold m-0 routes-page-title">Routes Management</h1>
-        <p className="text-secondary m-0 mt-1">Configure locations, adjust operational fares, and manage active system transits.</p>
+        <p className="text-white m-0 mt-1">Configure locations, adjust operational fares, and manage active system transits.</p>
       </div>
 
       {/* Management Control Input Card */}
       <div className="card routes-management-card p-4 mb-4 shadow-sm">
         <h5 className="fw-semibold mb-3 text-white">
-          {editingId ? "🔧 Modify Existing Route" : "➕ Register New Route Link"}
+          {editingId ? "🔧 Modify Existing Route" : "Register New Route"}
         </h5>
         
         <form onSubmit={editingId ? updateRoute : createRoute}>
           <div className="row g-3">
             <div className="col-12 col-md-4">
-              <label className="form-label text-secondary small fw-semibold">Starting Source Location</label>
+              <label className="form-label text-white small fw-semibold">Starting Location</label>
               <input
                 className="form-control dark-form-input"
-                placeholder="e.g., Downtown Station"
+                placeholder="e.g.,Kohima"
                 value={source}
                 onChange={(e) => setSource(e.target.value)}
                 required
@@ -312,10 +312,10 @@ export default function Routes() {
             </div>
 
             <div className="col-12 col-md-4">
-              <label className="form-label text-secondary small fw-semibold">Target Destination Terminal</label>
+              <label className="form-label text-white small fw-semibold">Destination</label>
               <input
                 className="form-control dark-form-input"
-                placeholder="e.g., North Airport Hub"
+                placeholder="e.g.,Mon"
                 value={destination}
                 onChange={(e) => setDestination(e.target.value)}
                 required
@@ -323,7 +323,7 @@ export default function Routes() {
             </div>
 
             <div className="col-12 col-md-4">
-              <label className="form-label text-secondary small fw-semibold">Route Fare Cost</label>
+              <label className="form-label text-white small fw-semibold">Route Fare Cost</label>
               <input
                 type="number"
                 min="0"
@@ -376,7 +376,7 @@ export default function Routes() {
             <tbody>
               {routes.length === 0 ? (
                 <tr>
-                  <td colSpan="5" className="text-center py-4 text-secondary small">
+                  <td colSpan="5" className="text-center py-4 text-white small">
                     No active transport routes loaded in system registry.
                   </td>
                 </tr>
