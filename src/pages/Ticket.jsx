@@ -139,19 +139,16 @@ export default function Ticket() {
            </div>
           </div>
         </div>
-
         <div className="card-body p-4">
-           <div className="pt-3 border-top border-dark mt-2 text-center">
-            <p className="text-muted m-0 font-monospace text-gold-link" style={{ fontSize: "11px", wordBreak: "break-all" }}>
-              {booking.ticket_code}
-            </p>
-          </div>
-          
-          <div className="ticket-meta-row">
-            <span className="small text-secondary fw-semibold text-uppercase tracking-wider">Ticket Code:</span>
-            <span className="font-monospace fw-bold text-warning">{booking.ticket_code}</span>
-          </div>
-
+  <div className="pt-3 border-top border-dark mt-2 d-flex flex-column align-items-center justify-content-center text-center">
+    <p className="small text-white fw-semibold text-uppercase tracking-wider m-0">
+      Code ID
+    </p>
+    <p className="text-muted m-0 font-monospace text-gold-link mt-1" style={{ fontSize: "11px", wordBreak: "break-all" }}>
+      {booking.ticket_code}
+    </p>
+  </div>
+</div>
           <div className="ticket-meta-row">
             <span className="small text-secondary fw-semibold text-uppercase tracking-wider">Passenger:</span>
             <span className="fw-bold text-light">{booking.customer_name}</span>
@@ -179,7 +176,7 @@ export default function Ticket() {
 
           <div className="ticket-meta-row">
             <span className="small text-secondary fw-semibold text-uppercase tracking-wider">Payment:</span>
-            <span className={`status-pill-badge ${booking.payment_status === "paid" ? "status-paid" : "status-pending"}`}>
+            <span className={`status-pill-badge ₹{booking.payment_status === "paid" ? "status-paid" : "status-pending"}`}>
               {booking.payment_status}
             </span>
           </div>
