@@ -28,7 +28,10 @@ export default function App() {
         <Route path="/ticket/:id" element={<Ticket />} />
         <Route path="/login" element={<Login />} />
         <Route path="/book" element={<Booking />} />
-        <Route path="/ticket/:code" element={<TicketStatus />} />
+        <Route
+           path="/ticket-status/:code"
+            element={<TicketStatus />}
+         />
 
         {/* STAFF + DRIVER (now correctly inside Routes) */}
         <Route path="/operator-login" element={
