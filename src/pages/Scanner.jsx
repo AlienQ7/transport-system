@@ -39,7 +39,7 @@ export default function Scanner() {
   async function verifyTicket(code) {
     try {
       const response = await apiFetch(
-        `/api/bookings/verify/₹{code}`
+        `/api/bookings/verify/${code}`
       );
 
       const data = await response.json();
@@ -54,7 +54,7 @@ export default function Scanner() {
   async function boardPassenger(code) {
     try {
       await apiFetch(
-        `/api/bookings/use/₹{code}`,
+        `/api/bookings/use/${code}`,
         {
           method: "PUT",
         }
