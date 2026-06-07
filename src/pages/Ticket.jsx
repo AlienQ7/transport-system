@@ -1,157 +1,5 @@
-/*import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { QRCodeCanvas } from "qrcode.react";
-import { apiFetch } from "../services/api";
-import jsPDF from "jspdf";
-import html2canvas from "html2canvas";
-
-
-export default function Ticket() {
-  const { id } = useParams();
-
-  const [booking, setBooking] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    loadTicket();
-  }, []);
-
-  async function loadTicket() {
-    try {
-      const response = await apiFetch(
-        `/api/bookings/${id}`
-      );
-
-      const data = await response.json();
-
-      console.log(data);
-
-      setBooking(data);
-    } catch (err) {
-      console.error(err);
-      alert("Failed to load ticket");
-    } finally {
-      setLoading(false);
-    }
-  }
-  async function downloadTicket() {
-    const element = document.getElementById("ticket");
-
-    const canvas = await html2canvas(element);
-
-    const imgData = canvas.toDataURL("image/png");
-
-    const pdf = new jsPDF();
-
-    pdf.addImage(
-      imgData,
-      "PNG",
-      10,
-      10,
-      190,
-     0
-    );
-
-    pdf.save(`ticket-${booking.ticket_code}.pdf`);
-  }
-  async function downloadTicketImage() {
-    const ticket = document.getElementById("ticket");
-
-    const canvas = await html2canvas(ticket);
-
-    const link = document.createElement("a");
-
-    link.download = `${booking.ticket_code}.png`;
-
-    link.href = canvas.toDataURL("image/png");
-
-    link.click();
-  }
-
-  if (loading) return <div>Loading...</div>;
-
-  if (!booking) return <div>Ticket not found</div>;
-  //if (booking.payment_status !== "paid") {
-   // return (
-     // <div>
-      //  <h2>Ticket Pending Approval</h2>
-      //  <p>
-         // Your payment has been submitted and is awaiting
-         // admin approval.
-        //</p>
-      //</div>
-    //);
-  //}
-
-  return (
-    <div id="ticket" style={{ maxWidth: "600px", margin: "20px auto" }}>
-      <h2>Ticket</h2>
-      
-      <div
-          style={{
-            marginTop: "20px",
-            display: "flex",
-            justifyContent: "center",
-          }}
-        >
-          <QRCodeCanvas
-           //value={booking.ticket_code}
-            //size={220}
-            value={`${window.location.origin}/verify/${booking.ticket_code}`}
-          />
-        </div>
-
-      <div
-        style={{
-          border: "1px solid #ddd",
-          padding: "20px",
-          borderRadius: "10px",
-        }}
-      >
-        <p>
-          <strong>Ticket Code:</strong> {booking.ticket_code}
-        </p>
-
-        <p>
-          <strong>Passenger:</strong> {booking.customer_name}
-        </p>
-
-        <p>
-          <strong>Seat:</strong> {booking.seat_no}
-        </p>
-
-        <p>
-          <strong>Travel Date:</strong> {booking.travel_date}
-        </p>
-
-        <p>
-          <strong>Departure Time:</strong> {booking.departure_time}
-        </p>
-
-        <p>
-          <strong>Status:</strong> {booking.status}
-        </p>
-
-        <p>
-          <strong>Payment:</strong> {booking.payment_status}
-        </p>
-        <p>
-          {`${window.location.origin}/verify/${booking.ticket_code}`}
-       </p>
-        <button onClick={downloadTicket}>
-           Download PDF
-        </button>
-        <button onClick={downloadTicketImage}>
-         Download Image
-       </button>
-
-      </div>
-    </div>
-  );
-}
-*/
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom"; // Added useNavigate for back navigation
+import { useParams, useNavigate } from "react-router-dom";
 import { QRCodeCanvas } from "qrcode.react";
 import { apiFetch } from "../services/api";
 import jsPDF from "jspdf";
@@ -161,7 +9,7 @@ import "../styles/ticket-voucher.css";
 
 export default function Ticket() {
   const { id } = useParams();
-  const navigate = useNavigate(); // Navigation hook initialization
+  const navigate = useNavigate();
 
   const [booking, setBooking] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -206,7 +54,7 @@ export default function Ticket() {
       0
     );
 
-    pdf.save(`ticket-${booking.ticket_code}.pdf`);
+    pdf.save(`ticket-₹{booking.ticket_code}.pdf`);
   }
   async function downloadTicketImage() {
     const ticket = document.getElementById("ticket");
@@ -215,7 +63,7 @@ export default function Ticket() {
 
     const link = document.createElement("a");
 
-    link.download = `${booking.ticket_code}.png`;
+    link.download = `₹{booking.ticket_code}.png`;
 
     link.href = canvas.toDataURL("image/png");
 
@@ -285,10 +133,8 @@ export default function Ticket() {
           >
             <div className="ticket-qr-container shadow">
               <QRCodeCanvas
-              //value={booking.ticket_code}
-               //size={220}
-            value={`${window.location.origin}/verify/${booking.ticket_code}`}
-            size={160}
+                 value={booking.ticket_code}
+                 size={220}
              />
            </div>
           </div>
@@ -297,9 +143,10 @@ export default function Ticket() {
         <div className="card-body p-4">
            <div className="pt-3 border-top border-dark mt-2 text-center">
             <p className="text-muted m-0 font-monospace text-gold-link" style={{ fontSize: "11px", wordBreak: "break-all" }}>
-              {`${window.location.origin}/verify/${booking.ticket_code}`}
+              {booking.ticket_code}
             </p>
           </div>
+          
           <div className="ticket-meta-row">
             <span className="small text-secondary fw-semibold text-uppercase tracking-wider">Ticket Code:</span>
             <span className="font-monospace fw-bold text-warning">{booking.ticket_code}</span>
