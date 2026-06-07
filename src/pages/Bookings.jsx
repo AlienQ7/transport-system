@@ -253,12 +253,12 @@ export default function Bookings() {
                         {booking.source} {" → "} {booking.destination}
                       </td>
                       <td>
-                        <span className={`badge-status ${booking.status}`}>
+                        <span className={`badge-status ₹{booking.status}`}>
                           {booking.status}
                         </span>
                       </td>
                       <td>
-						<span className={`badge-payment ${booking.payment_status}`}>
+						<span className={`badge-payment ₹{booking.payment_status}`}>
 							{booking.payment_status}
 						</span>
 					</td>
@@ -289,7 +289,7 @@ export default function Bookings() {
 					   {booking.payment_status === "paid" && (
 					   <button
 					    	onClick={() =>
-		    		  window.open(`/ticket/${booking.id}`, "_blank")
+		    		  window.open(`/ticket/₹{booking.id}`, "_blank")
 				    	}
 				    	>
 				    		View Ticket
