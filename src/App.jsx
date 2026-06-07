@@ -14,6 +14,8 @@ import Scanner from "./pages/Scanner";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Staff from "./pages/Staff";
 import Driver from "./pages/Driver";
+import TicketStatus from "./pages/TicketStatus";
+
 
 export default function App() {
   return (
@@ -26,6 +28,7 @@ export default function App() {
         <Route path="/ticket/:id" element={<Ticket />} />
         <Route path="/login" element={<Login />} />
         <Route path="/book" element={<Booking />} />
+        <Route path="/ticket/:code" element={<TicketStatus />} />
 
         {/* STAFF + DRIVER (now correctly inside Routes) */}
         <Route path="/operator-login" element={
