@@ -5,10 +5,10 @@ import "../styles/dashboard.css";
 
 export default function Driver() {
   const [assignedShift, setAssignedShift] = useState({
-    vehicleName: "🚌 Bus Coach A-10",
-    licensePlate: "SU-2026-TXT",
-    route: "Terminal 1 → West Coast Terminal",
-    departureTime: "08:30 AM",
+    vehicleName: "Sumu",
+    licensePlate: "NL8787",
+    route: "Kohima to Mon",
+    departureTime: "10:0AM",
     totalPassengers: 0
   });
   
