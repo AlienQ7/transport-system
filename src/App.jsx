@@ -28,13 +28,13 @@ export default function App() {
         <Route path="/book" element={<Booking />} />
 
         {/* STAFF + DRIVER (now correctly inside Routes) */}
-        <Route path="/staff" element={
+        <Route path="/operator-login" element={
           <ProtectedRoute>
             <Staff />
           </ProtectedRoute>
         } />
 
-        <Route path="/driver" element={
+        <Route path="/driver-login" element={
           <ProtectedRoute>
             <Driver />
           </ProtectedRoute>
