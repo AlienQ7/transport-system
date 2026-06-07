@@ -131,17 +131,17 @@ export default function Ticket() {
             }}
           >
             <div className="ticket-qr-container shadow">
-              <QRCodeCanvas
-                 value={booking.ticket_code}
-                 size={220}
-             />
-           </div>
+  <QRCodeCanvas
+    value={`https://transport-system-lru.pages.dev/ticket/${booking.ticket_code}`}
+    size={220}
+  />
+</div>
           </div>
         </div>
         <div className="card-body p-4">
   <div className="pt-3 border-top border-dark mt-2 d-flex flex-column align-items-center justify-content-center text-center">
     <p className="small text-white fw-semibold text-uppercase tracking-wider m-0">
-      Code ID
+      Ticket ID:
     </p>
     <p className="text-muted m-0 font-monospace text-gold-link mt-1" style={{ fontSize: "11px", wordBreak: "break-all" }}>
       {booking.ticket_code}
