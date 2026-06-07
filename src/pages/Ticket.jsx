@@ -1,3 +1,4 @@
+//hello ive chnage 
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { QRCodeCanvas } from "qrcode.react";
