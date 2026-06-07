@@ -387,7 +387,7 @@ export default function Routes() {
                     <td>{route.source}</td>
                     <td>{route.destination}</td>
                     <td>
-                      <span className="text-warning fw-medium">${Number(route.fare).toFixed(2)}</span>
+                      <span className="text-warning fw-medium">₹{Number(route.fare).toFixed(2)}</span>
                     </td>
                     <td>
                       <div className="d-flex justify-content-end gap-2">
