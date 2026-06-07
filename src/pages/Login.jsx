@@ -30,7 +30,21 @@ export default function Login() {
 
     if (data.token) {
       localStorage.setItem("token", data.token);
+      const emailLower = email.toLowerCase();
+
+     if (emailLower.includes("staff")) {
+       localStorage.setItem("role", "staff");
+       navigate("/staff");
+    }
+    else if (emailLower.includes("driver")) {
+      localStorage.setItem("role", "driver");
+      navigate("/driver");
+    }
+    else {
+      localStorage.setItem("role", "admin");
       navigate("/dashboard");
+    };
+
     } else {
       alert("Login failed");
     }
