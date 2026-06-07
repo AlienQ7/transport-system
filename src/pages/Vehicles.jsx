@@ -256,7 +256,7 @@ export default function Vehicles() {
 import { useEffect, useState } from "react";
 import { apiFetch } from "../services/api";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "../styles/vehicles.css"; // Imports matching variable styles
+import "../styles/vehicles.css";
 
 export default function Vehicles() {
   const [vehicles, setVehicles] = useState([]);
@@ -371,23 +371,23 @@ export default function Vehicles() {
       {/* Page Title Header Block */}
       <div className="mb-4">
         <h1 className="fw-bold m-0 vehicles-page-title">Fleet Management</h1>
-        <p className="text-secondary m-0 mt-1">Configure registered transport vehicles, adjust capacity thresholds, and assign active routes.</p>
+        <p className="text-white m-0 mt-1">Configure registered transport vehicles, adjust capacity thresholds, and assign active routes.</p>
       </div>
 
       {/* Deployment & Modification Input Panel Card */}
       <div className="card vehicles-management-card p-4 mb-4 shadow-sm">
         <h5 className="fw-semibold mb-3 text-white">
-          {editingId ? "🔧 Update Fleet Specifications" : "➕ Register New Fleet Asset"}
+          {editingId ? "🔧 Update Fleet Specifications" : "Register New Fleet Asset"}
         </h5>
         
         <form onSubmit={editingId ? updateVehicle : createVehicle}>
           <div className="row g-3">
             
             <div className="col-12 col-md-4">
-              <label className="form-label text-secondary small fw-semibold">Vehicle Code / ID plate</label>
+              <label className="form-label text-white small fw-semibold">Vehicle Code / ID plate</label>
               <input
                 className="form-control dark-form-input"
-                placeholder="e.g., BUS-094"
+                placeholder="e.g, NL8787"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
@@ -395,7 +395,7 @@ export default function Vehicles() {
             </div>
 
             <div className="col-12 col-md-4">
-              <label className="form-label text-secondary small fw-semibold">Scheduled Date of Transit</label>
+              <label className="form-label text-white small fw-semibold">Scheduled Date</label>
               <input
                 type="date"
                 className="form-control dark-form-input"
@@ -406,7 +406,7 @@ export default function Vehicles() {
             </div>
 
             <div className="col-12 col-md-4">
-              <label className="form-label text-secondary small fw-semibold">Target Departure Time</label>
+              <label className="form-label text-white small fw-semibold">Target Departure Time</label>
               <input
                 type="time"
                 className="form-control dark-form-input"
@@ -417,7 +417,7 @@ export default function Vehicles() {
             </div>
 
             <div className="col-12 col-md-6">
-              <label className="form-label text-secondary small fw-semibold">Max Seat Capacity Limit</label>
+              <label className="form-label text-white small fw-semibold">Max Seat Capacity Limit</label>
               <input
                 type="number"
                 min="1"
@@ -430,7 +430,7 @@ export default function Vehicles() {
             </div>
 
             <div className="col-12 col-md-6">
-              <label className="form-label text-secondary small fw-semibold">Assigned Transit Route Link</label>
+              <label className="form-label text-white small fw-semibold">Assigned Route </label>
               <select
                 className="form-select dark-form-select"
                 value={routeId}
@@ -490,7 +490,7 @@ export default function Vehicles() {
             <tbody>
               {vehicles.length === 0 ? (
                 <tr>
-                  <td colSpan="8" className="text-center py-4 text-secondary small">
+                  <td colSpan="8" className="text-center py-4 text-white small">
                     No registered operational vehicles tracked in registry.
                   </td>
                 </tr>
