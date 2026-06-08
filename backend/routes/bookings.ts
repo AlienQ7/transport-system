@@ -246,7 +246,7 @@ bookings.get(
     }
 
     return c.json({
-      status: "VALID",
+      status: "PAID",
       booking,
     });
   }
