@@ -1,0 +1,22 @@
+# dependencies
+node_modules/
+backend/node_modules/
+
+# cloudflare
+backend/.wrangler/
+wrangler.jsonc
+
+# builds
+dist/
+build/
+
+# env
+.env
+
+# database scripts (your requirement)
+schema.sql
+update.sql
+*.sql
+
+# logs
+*.log
