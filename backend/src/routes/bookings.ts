@@ -1,7 +1,5 @@
 import { Hono } from "hono";
-//import { authMiddleware } from "../middleware/auth";
-//import { authMiddleware } from "../../src/middleware/auth";
-import { authMiddleware } from "../src/middleware/auth";
+import { authMiddleware } from "../middleware/auth";
 
 const bookings = new Hono();
 
@@ -383,5 +381,28 @@ bookings.delete("/:id", authMiddleware, async (c) => {
     success: true,
   });
 });
+//seat display
+bookings.get("/seats/:vehicleId", async (c) => {
+  const vehicleId = c.req.param("vehicleId");
+  const travelDate = c.req.query("travel_date");
+  const departureTime = c.req.query("departure_time");
 
+  const result = await c.env.transport_db
+    .prepare(`
+      SELECT seat_no
+      FROM bookings
+      WHERE vehicle_id = ?
+      AND travel_date = ?
+      AND departure_time = ?
+      AND status = 'active'
+    `)
+    .bind(
+      vehicleId,
+      travelDate,
+      departureTime
+    )
+    .all();
+
+  return c.json(result.results);
+});
 export default bookings;

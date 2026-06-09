@@ -1,6 +1,6 @@
 import { Hono } from "hono";
-//import { authMiddleware } from "../middleware/auth";
-import { authMiddleware } from "../src/middleware/auth";
+import { authMiddleware } from "../middleware/auth";
+
 //update
 const vehicles = new Hono();
 
@@ -11,6 +11,7 @@ vehicles.post("/", authMiddleware, async (c) => {
   const {
     name,
     capacity,
+    layout,
     route_id,
     travel_date,
     departure_time,
@@ -28,11 +29,12 @@ vehicles.post("/", authMiddleware, async (c) => {
 
   const result = await c.env.transport_db
     .prepare(
-  "INSERT INTO vehicles (name, capacity, route_id, travel_date, departure_time) VALUES (?, ?, ?, ?, ?)"
+  "INSERT INTO vehicles (name, capacity, layout, route_id, travel_date, departure_time) VALUES (?, ?, ?, ?, ?, ?)"
 )
 .bind(
   name,
   capacity,
+  layout,
   route_id,
   travel_date,
   departure_time
@@ -53,6 +55,7 @@ vehicles.get("/", async (c) => {
         v.id,
         v.name,
         v.capacity,
+        v.layout,
         v.route_id,
         v.travel_date,
         v.departure_time,
@@ -98,6 +101,7 @@ vehicles.put("/:id", authMiddleware, async (c) => {
   const {
     name,
     capacity,
+    layout,
     route_id,
     travel_date,
     departure_time,
@@ -115,11 +119,12 @@ vehicles.put("/:id", authMiddleware, async (c) => {
 
   await c.env.transport_db
   .prepare(
-    "UPDATE vehicles SET name=?, capacity=?, route_id=?, travel_date=?, departure_time=? WHERE id=?"
+    "UPDATE vehicles SET name=?, capacity=?,layout=?, route_id=?, travel_date=?, departure_time=? WHERE id=?"
   )
   .bind(
     name,
     capacity,
+    layout,
     route_id,
     travel_date,
     departure_time,

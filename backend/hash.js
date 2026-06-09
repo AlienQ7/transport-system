@@ -1,3 +1,3 @@
 const bcrypt = require("bcryptjs");
 
-bcrypt.hash("admin123", 10).then(console.log);
+bcrypt.hash("local", 10).then(console.log);

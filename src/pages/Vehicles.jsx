@@ -1,258 +1,3 @@
-/*import { useEffect, useState } from "react";
-import { apiFetch } from "../services/api";
-
-export default function Vehicles() {
-  const [vehicles, setVehicles] = useState([]);
-  const [routes, setRoutes] = useState([]);
-
-  const [name, setName] = useState("");
-  const [capacity, setCapacity] = useState("");
-  const [routeId, setRouteId] = useState("");
-  const [travelDate, setTravelDate] =
-    useState("");
-
-  const [departureTime, setDepartureTime] =
-    useState("");
-
-  const [editingId, setEditingId] = useState(null);
-
-  useEffect(() => {
-    loadVehicles();
-    loadRoutes();
-  }, []);
-
-  async function loadVehicles() {
-    const res = await apiFetch("/api/vehicles");
-    const data = await res.json();
-    setVehicles(data);
-  }
-
-  async function loadRoutes() {
-    const res = await apiFetch("/api/routes");
-    const data = await res.json();
-    setRoutes(data);
-  }
-
-  async function createVehicle(e) {
-    e.preventDefault();
-
-    const capacityValue = Number(capacity);
-
-    if (capacityValue <= 0) {
-      alert("Capacity must be greater than zero");
-      return;
-    }
-
-    await apiFetch("/api/vehicles", {
-      method: "POST",
-      body: JSON.stringify({
-        name,
-        capacity: capacityValue,
-        route_id: Number(routeId),
-        travel_date: travelDate,
-        departure_time: departureTime,
-      }),
-    });
-
-    resetForm();
-    loadVehicles();
-  }
-
-  async function updateVehicle(e) {
-    e.preventDefault();
-
-    const capacityValue = Number(capacity);
-
-    if (capacityValue <= 0) {
-      alert("Capacity must be greater than zero");
-      return;
-    }
-
-    await apiFetch(`/api/vehicles/${editingId}`, {
-      method: "PUT",
-      body: JSON.stringify({
-        name,
-        capacity: capacityValue,
-        route_id: Number(routeId),
-        travel_date: travelDate,
-        departure_time: departureTime,
-      }),
-    });
-
-    resetForm();
-    loadVehicles();
-  }
-
-  async function deleteVehicle(id) {
-    if (!window.confirm("Delete vehicle?")) {
-      return;
-    }
-
-    await apiFetch(`/api/vehicles/${id}`, {
-      method: "DELETE",
-    });
-
-    loadVehicles();
-  }
-
-  function editVehicle(vehicle) {
-    setEditingId(vehicle.id);
-
-    setName(vehicle.name);
-    setCapacity(vehicle.capacity);
-    setRouteId(vehicle.route_id);
-
-    setTravelDate(
-      vehicle.travel_date || ""
-    );
-
-    setDepartureTime(
-      vehicle.departure_time || ""
-    );
-  }
-  function resetForm() {
-    setEditingId(null);
-
-    setName("");
-    setCapacity("");
-    setRouteId("");
-
-    setTravelDate("");
-    setDepartureTime("");
-  }
-
-  return (
-    <div>
-      <h1>Vehicles</h1>
-
-      <form
-        onSubmit={
-          editingId
-            ? updateVehicle
-            : createVehicle
-        }
-      >
-        <input
-          placeholder="Vehicle Number"
-          value={name}
-          onChange={(e) =>
-            setName(e.target.value)
-          }
-        />
-        <input
-  type="date"
-  value={travelDate}
-  onChange={(e) =>
-    setTravelDate(e.target.value)
-  }
-/>
-
-<input
-  type="time"
-  value={departureTime}
-  onChange={(e) =>
-    setDepartureTime(e.target.value)
-  }
-/>
-
-        <input
-          type="number"
-          min="1"
-          placeholder="Capacity"
-          value={capacity}
-          onChange={(e) =>
-            setCapacity(e.target.value)
-          }
-        />
-
-        <select
-          value={routeId}
-          onChange={(e) =>
-            setRouteId(e.target.value)
-          }
-        >
-          <option value="">
-            Select Route
-          </option>
-
-          {routes.map((route) => (
-            <option
-              key={route.id}
-              value={route.id}
-            >
-              {route.source} → {route.destination}
-            </option>
-          ))}
-        </select>
-
-        <button type="submit">
-          {editingId
-            ? "Update Vehicle"
-            : "Add Vehicle"}
-        </button>
-
-        {editingId && (
-          <button
-            type="button"
-            onClick={resetForm}
-          >
-            Cancel
-          </button>
-        )}
-      </form>
-
-      <hr />
-
-      <table border="1">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Vehicle</th>
-            <th>Capacity</th>
-            <th>Travel Date</th>
-            <th>Departure Time</th>
-            <th>Source</th>
-            <th>Destination</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          {vehicles.map((vehicle) => (
-            <tr key={vehicle.id}>
-              <td>{vehicle.id}</td>
-              <td>{vehicle.name}</td>
-              <td>{vehicle.capacity}</td>
-              <td>{vehicle.travel_date}</td>
-              <td>{vehicle.departure_time}</td>
-              <td>{vehicle.source}</td>
-              <td>{vehicle.destination}</td>
-
-              <td>
-                <button
-                  onClick={() =>
-                    editVehicle(vehicle)
-                  }
-                >
-                  Edit
-                </button>
-
-                <button
-                  onClick={() =>
-                    deleteVehicle(vehicle.id)
-                  }
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
-}
-*/
 import { useEffect, useState } from "react";
 import { apiFetch } from "../services/api";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -263,12 +8,17 @@ export default function Vehicles() {
   const [routes, setRoutes] = useState([]);
 
   const [name, setName] = useState("");
-  const [capacity, setCapacity] = useState("");
+  //const [capacity, setCapacity] = useState("");
   const [routeId, setRouteId] = useState("");
   const [travelDate, setTravelDate] = useState("");
   const [departureTime, setDepartureTime] = useState("");
-
   const [editingId, setEditingId] = useState(null);
+  // seat layout
+  const [layout, setLayout] = useState(``);
+  const capacity =
+  (layout.match(/[SR]/g) || []).length;
+  
+  let seatCounter = 1;
 
   useEffect(() => {
     loadVehicles();
@@ -301,6 +51,7 @@ export default function Vehicles() {
       body: JSON.stringify({
         name,
         capacity: capacityValue,
+        layout,
         route_id: Number(routeId),
         travel_date: travelDate,
         departure_time: departureTime,
@@ -325,6 +76,7 @@ export default function Vehicles() {
       body: JSON.stringify({
         name,
         capacity: capacityValue,
+        layout,
         route_id: Number(routeId),
         travel_date: travelDate,
         departure_time: departureTime,
@@ -350,7 +102,7 @@ export default function Vehicles() {
   function editVehicle(vehicle) {
     setEditingId(vehicle.id);
     setName(vehicle.name);
-    setCapacity(vehicle.capacity);
+    setLayout(vehicle.layout || "");
     setRouteId(vehicle.route_id);
     setTravelDate(vehicle.travel_date || "");
     setDepartureTime(vehicle.departure_time || "");
@@ -359,7 +111,7 @@ export default function Vehicles() {
   function resetForm() {
     setEditingId(null);
     setName("");
-    setCapacity("");
+    setLayout("");
     setRouteId("");
     setTravelDate("");
     setDepartureTime("");
@@ -417,19 +169,6 @@ export default function Vehicles() {
             </div>
 
             <div className="col-12 col-md-6">
-              <label className="form-label text-white small fw-semibold">Max Seat Capacity Limit</label>
-              <input
-                type="number"
-                min="1"
-                className="form-control dark-form-input"
-                placeholder="Maximum passengers allowed"
-                value={capacity}
-                onChange={(e) => setCapacity(e.target.value)}
-                required
-              />
-            </div>
-
-            <div className="col-12 col-md-6">
               <label className="form-label text-white small fw-semibold">Assigned Route </label>
               <select
                 className="form-select dark-form-select"
@@ -445,6 +184,127 @@ export default function Vehicles() {
                 ))}
               </select>
             </div>
+            {/* Layout preivew*/}
+<div className="col-12">
+  <label className="form-label text-white small fw-semibold">
+    Vehicle Layout Preview
+  </label>
+
+  <div
+    className="p-3 rounded"
+    style={{
+      background: "#111827",
+      overflowX: "auto",
+    }}
+  >
+    
+    {layout.split("\n").map((row, rowIndex) => (
+      <div
+        key={rowIndex}
+        className="d-flex justify-content-center gap-1 mb-1"
+      >
+        {row.split("").map((cell, cellIndex) => {
+          let bg = "transparent";
+          let text = "";
+          if (cell === "S") {
+  bg = "#198754";
+  text = seatCounter++;
+}
+
+if (cell === "R") {
+  bg = "#6c757d";
+  text = seatCounter++;
+}
+      
+
+          if (cell === "D") {
+            bg = "#495057";
+            text = "D";
+          }
+
+          return (
+            <div
+              key={cellIndex}
+              style={{
+                width: "20px",
+                height: "20px",
+                borderRadius: "4px",
+                backgroundColor: bg,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontSize: "10px",
+                color: "white",
+              }}
+            >
+              {text}
+            </div>
+          );
+        })}
+      </div>
+    ))}
+  </div>
+</div>
+            <div className="col-12">
+  <label className="form-label text-white small fw-semibold">
+    Vehicle Layout
+  </label>
+
+  <textarea
+    className="form-control dark-form-input"
+    rows="5"
+    value={layout}
+    onChange={(e) => setLayout(e.target.value.toUpperCase())}
+  />
+</div>
+
+{/*Button fo BNRD */}
+<div className="d-flex gap-2 mb-2">
+  <button
+    type="button"
+    className="btn btn-success"
+    onClick={() => setLayout(layout + "S")}
+  >
+    (S)Seat
+  </button>
+
+  <button
+    type="button"
+    className="btn btn-secondary"
+    onClick={() => setLayout(layout + "R")}
+  >
+    (R)Reserved
+  </button>
+
+  <button
+    type="button"
+    className="btn btn-dark"
+    onClick={() => setLayout(layout + "D")}
+  >
+    (D)Driver
+  </button>
+
+  <button
+    type="button"
+    className="btn btn-light"
+    onClick={() => setLayout(layout + "N")}
+  >
+    Empty
+  </button>
+
+  <button
+    type="button"
+    className="btn btn-primary"
+    onClick={() => setLayout(layout + "\n")}
+  >
+    New Row
+  </button>
+</div>
+<div className="col-12">
+  <div className="alert alert-info py-2 mb-0">
+    Total Seats Available: <strong>{capacity}</strong>
+  </div>
+</div>
 
           </div>
 

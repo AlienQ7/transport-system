@@ -1,20 +1,32 @@
 import { Hono } from "hono";
 import { cors } from "hono/cors";
-import auth from "../routes/auth";
+import auth from "./routes/auth";
 import { authMiddleware } from "./middleware/auth";
-import routes from "../routes/routes";
-import vehicles from "../routes/vehicles";
-import bookings from "../routes/bookings";
+import routes from "./routes/routes";
+import vehicles from "./routes/vehicles";
+import bookings from "./routes/bookings";
 
 type Bindings = {
   transport_db: D1Database;
 };
 
 const app = new Hono<{ Bindings: Bindings }>();
+
+//Dynamically handle local and live frontend origins
+const ALLOWED_ORIGINS = [
+  "http://localhost:5173",                 
+  "https://transport-system-lru.pages.dev" 
+];
+
 app.use(
   "*",
   cors({
-    origin: "https://transport-system-lru.pages.dev",
+    origin: (origin) => {
+      if (ALLOWED_ORIGINS.includes(origin)) {
+        return origin;
+      }
+      return "https://transport-system-lru.pages.dev";
+    },
     allowMethods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowHeaders: ["Content-Type", "Authorization"],
   })

@@ -6,10 +6,8 @@ import "../styles/booking.css";
 
 export default function Booking() {
   const navigate = useNavigate();
-  
   const [routes, setRoutes] = useState([]);
   const [vehicles, setVehicles] = useState([]);
-
   const [customerName, setCustomerName] = useState("");
   const [selectedFare, setSelectedFare] = useState(0);
   const [routeId, setRouteId] = useState("");
@@ -18,12 +16,56 @@ export default function Booking() {
   const [travelDate, setTravelDate] = useState("");
   const [departureTime, setDepartureTime] = useState("");
   const [phone, setPhone] = useState("");
+  const [selectedSeat, setSelectedSeat] = useState(null);
+  const [occupiedSeats, setOccupiedSeats] = useState([]);
+  const selectedVehicle =
+      vehicles.find(v => String(v.id) === String(vehicleId));
 
-  useEffect(() => {
-    loadRoutes();
-    loadVehicles();
-  }, []);
+  const vehicleLayout =
+     selectedVehicle?.layout || "";
+     useEffect(() => {
+      loadRoutes();
+      loadVehicles();
+    }, []);
+    //after backend fecth remove
+   useEffect(() => {
+     setOccupiedSeats([2, 5, 8, 13, 21]);
+    }, []);
+    
+   const parsedLayout =
+  vehicleLayout
+    ? vehicleLayout
+        .trim()
+        .split("\n")
+        .map(row => row.trim().split(""))
+    : [];
+ // S number
+   let seatCounter = 1;
 
+const numberedLayout =
+
+  parsedLayout.map(row =>
+    row.map(cell => {
+
+      if (cell === "S") {
+        return {
+          type: "S",
+          seatNo: seatCounter++
+        };
+      }
+
+      if (cell === "R") {
+        return {
+          type: "R",
+          seatNo: seatCounter++
+        };
+      }
+
+      return {
+        type: cell
+      };
+    })
+  );
   async function loadRoutes() {
     const res = await apiFetch("/api/routes");
     const data = await res.json();
@@ -177,26 +219,123 @@ export default function Booking() {
                   </select>
                 </div>
 
-                <div className="col-12">
-                  <label className="form-label text-white small fw-semibold">Choose Seat Number</label>
-                  <input
-                    type="number"
-                    min="1"
-                    className="form-control dark-form-input"
-                    placeholder="Choose a Seat Number"
-                    value={seatNo}
-                    onChange={(e) => setSeatNo(Math.max(1, Number(e.target.value)))}
-                    required
-                  />
-                </div>
-              </div>
-            </div>
+               {/*render layout*/} 
+             <div className="d-flex flex-column gap-2">
+  
+{numberedLayout.map((row, rowIndex) => (
+  <div
+    key={rowIndex}
+    className="d-flex gap-1 justify-content-center"
+  >
+    {row.map((cell, cellIndex) => {
 
-            {/* Right Quick Summary Dashboard Badge Column */}
-            <div className="col-12 col-lg-4 d-flex flex-column">
-              <h5 className="fw-semibold mb-3 text-white text-center text-lg-start">Invoice Overview</h5>
+      if (cell.type === "N") {
+  return (
+    <div
+      key={`n-${rowIndex}-${cellIndex}`}
+            style={{
+              width: 32,
+              height: 32
+            }}
+          />
+        );
+      }
+
+      if (cell.type === "D") {
+  return (
+    <div
+      key={`d-${rowIndex}-${cellIndex}`}
+            className="seat-driver"
+          >
+            D
+          </div>
+        );
+      }
+
+      if (cell.type === "R") {
+  return (
+    <div
+      key={`r-${rowIndex}-${cellIndex}`}
+      className="seat-reserved"
+    >
+      {cell.seatNo}
+    </div>
+  );
+}
+
+      if (cell.type !== "S") {
+  return null;
+}
+
+const currentSeatNo = cell.seatNo;
+
+const isBooked =
+  occupiedSeats.includes(currentSeatNo);
+
+const isSelected =
+  selectedSeat === currentSeatNo;
+
+      return (
+  <button
+    key={`${rowIndex}-${cellIndex}`}
+    type="button"
+          disabled={isBooked}
+          className={
+            isBooked
+              ? "seat booked"
+              : isSelected
+              ? "seat selected"
+              : "seat available"
+          }
+          onClick={() => {
+            setSelectedSeat(currentSeatNo);
+            setSeatNo(currentSeatNo);
+          }}
+        >
+          {currentSeatNo}
+        </button>
+      );
+    })}
+  </div>
+))}
+<div className="d-flex justify-content-center gap-3 mt-3 flex-wrap">
+
+  <div>
+    🟢 Available
+  </div>
+
+  <div>
+    🔴 Booked
+  </div>
+
+  <div>
+    🟡 Selected
+  </div>
+
+  <div>
+    ⚫ Driver
+  </div>
+
+  <div>
+    ⚪ Reserved
+  </div>
+
+</div>
+</div>
+{/*below legend*/}
+<div className="text-center mt-3">
+  <h6 className="text-warning">
+    Selected Seat:
+    {" "}
+    {selectedSeat || "None"}
+  </h6>
+</div>
+		</div></div>
+						{/* Right Quick Summary Dashboard Badge Column */}
+				<div className="col-12 col-lg-4 d-flex flex-column">
+					<h5 className="fw-semibold mb-3 text-white text-center text-lg-start">Invoice Overview</h5>
               
-              <div className="ticket-summary-badge flex-grow-1 d-flex flex-column justify-content-between">
+				<div className="ticket-summary-badge flex-grow-1 d-flex flex-column justify-content-between">
                 
                 <div className="mb-4 text-center py-2">
                   <span className="text-secondary small d-block text-uppercase tracking-wider fw-semibold mb-1">Standard Route Fare</span>
@@ -223,7 +362,7 @@ export default function Booking() {
 
           {/* Submission Row Area */}
           <div className="d-flex justify-content-center justify-content-lg-end mt-4 pt-3 border-top" style={{ borderColor: "var(--border-muted)" }}>
-            <button type="submit" className="btn btn-gold-action px-5 fw-bold w-100 w-lg-auto">
+            <button type="submit" className="btn btn-confrim px-5 fw-bold w-100 w-lg-auto">
               Confirm Ticket Issuance &rarr;
             </button>
           </div>
