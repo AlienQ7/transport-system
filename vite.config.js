@@ -17,14 +17,14 @@ export default defineConfig({
       injectRegister: 'auto',
 
       manifest: {
-        name: 'TransportApp',
-        short_name: 'TransportApp',
-        description: 'Transport Management System',
-        start_url: '/',
-        scope: '/',
-        display: 'standalone',
-        theme_color: '#0f172a',
-        background_color: '#0f172a',
+		name: 'SmartDesk',
+		short_name: 'SmartDesk',
+		description: 'SmartDesk Transport Management System',
+		start_url: '/',
+		scope: '/',
+		display: 'standalone',
+		theme_color: '#0f172a',
+		background_color: '#0f172a',
 
         icons: [
           {
@@ -51,7 +51,6 @@ export default defineConfig({
 		skipWaiting: true,
 		cleanupOutdatedCaches: true,
 		navigateFallback: '/',
-		runtimeCaching: []
 	}
     })
   ]

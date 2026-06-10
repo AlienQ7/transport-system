@@ -1,0 +1,64 @@
+/* src/styles/install.css */
+
+.pwa-install-wrapper {
+  position: fixed;
+  bottom: 20px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.pwa-install-card {
+  background: var(--bg-card-dark);
+  color: white;
+  padding: 12px 14px;
+  border-radius: var(--radius-large);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 92%;
+  max-width: 380px;
+
+  border: 1px solid var(--accent-gold);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+
+  backdrop-filter: blur(10px);
+}
+
+.pwa-install-card strong {
+  color: var(--accent-gold);
+  font-size: 14px;
+  display: block;
+}
+
+.pwa-install-sub {
+  font-size: 12px;
+  color: #cbd5e1;
+  margin-top: 2px;
+}
+
+.pwa-install-btn {
+  background: var(--accent-gold);
+  color: black;
+  border: none;
+  padding: 8px 14px;
+  border-radius: var(--radius-small);
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.pwa-install-btn:hover {
+  background: var(--accent-gold-hover);
+}
+
+.pwa-install-close {
+  margin-left: 8px;
+  background: transparent;
+  border: none;
+  color: #cbd5e1;
+  font-size: 16px;
+  cursor: pointer;
+}

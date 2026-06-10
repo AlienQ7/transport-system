@@ -1,47 +1,41 @@
 import usePWAInstall from '../usePWAInstall'
+import { useState } from 'react'
+import "../styles/install.css"
 
 export default function InstallPWAButton() {
   const { install, canInstall, isInstalled } = usePWAInstall()
+  const [hidden, setHidden] = useState(false)
 
-  if (isInstalled) return null
-  if (!canInstall) return null
+  if (isInstalled || !canInstall || hidden) return null
 
   return (
-    <div style={styles.wrapper}>
-      <div style={styles.card}>
-        <p style={{ margin: 0 }}>Install Transport App</p>
-        <button onClick={install} style={styles.button}>
-          Install
-        </button>
+    <div className="pwa-install-wrapper">
+      <div className="pwa-install-card">
+
+        <div>
+          <strong>SmartDesk</strong>
+          <div className="pwa-install-sub">
+            Install for faster access & offline use
+          </div>
+        </div>
+
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <button
+            className="pwa-install-btn"
+            onClick={install}
+          >
+            Install
+          </button>
+
+          <button
+            className="pwa-install-close"
+            onClick={() => setHidden(true)}
+          >
+            ✕
+          </button>
+        </div>
+
       </div>
     </div>
   )
-}
-
-const styles = {
-  wrapper: {
-    position: 'fixed',
-    bottom: 20,
-    left: 20,
-    zIndex: 9999
-  },
-  card: {
-    background: '#0f172a',
-    color: 'white',
-    padding: '12px 14px',
-    borderRadius: 10,
-    display: 'flex',
-    gap: 10,
-    alignItems: 'center',
-    boxShadow: '0 10px 30px rgba(0,0,0,0.3)'
-  },
-  button: {
-    background: '#22c55e',
-    border: 'none',
-    padding: '6px 12px',
-    borderRadius: 6,
-    cursor: 'pointer',
-    color: 'black',
-    fontWeight: 'bold'
-  }
 }
