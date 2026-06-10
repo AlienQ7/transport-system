@@ -19,8 +19,10 @@ import { registerSW } from 'virtual:pwa-register'
 
 registerSW({
   immediate: true,
-  onOfflineReady() {
-    console.log('PWA ready offline')
+  onRegisteredSW(swUrl, r) {
+    if (r) {
+      r.update()
+    }
   }
 })
 

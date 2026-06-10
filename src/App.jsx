@@ -15,11 +15,13 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Staff from "./pages/Staff";
 import Driver from "./pages/Driver";
 import TicketStatus from "./pages/TicketStatus";
+import InstallPWAButton from "./components/InstallPWAButton"
 
 
 export default function App() {
   return (
     <BrowserRouter>
+    <InstallPWAButton />
       <Routes>
 
         {/* PUBLIC */}

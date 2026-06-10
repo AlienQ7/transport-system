@@ -47,10 +47,12 @@ export default defineConfig({
       },
 
       workbox: {
-        cleanupOutdatedCaches: true,
-        clientsClaim: true,
-        skipWaiting: true
-      }
+		clientsClaim: true,
+		skipWaiting: true,
+		cleanupOutdatedCaches: true,
+		navigateFallback: '/',
+		runtimeCaching: []
+	}
     })
   ]
 })
