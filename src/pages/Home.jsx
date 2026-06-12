@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import "../styles/Home.css";
 
 export default function Home() {
+  const token = localStorage.getItem("token");
+  const role = localStorage.getItem("role");
   const [menuOpen, setMenuOpen] = useState(false);
   return (
     <div className="home-page">
@@ -30,17 +32,34 @@ export default function Home() {
             Book Now
           </Link>
 
-          <Link to="/login" className="gold-bg">
-            Admin Login
-          </Link>
+          {!token ? (
+  <>
+    <Link to="/login" className="gold-bg">
+      Admin Login
+    </Link>
 
-          <Link to="/operator-login" className="gold-bg">
-            Staff
-          </Link>
+    <Link to="/login" className="gold-bg">
+      Staff Login
+    </Link>
 
-          <Link to="/driver-login"className="gold-bg">
-            Driver
-          </Link>
+    <Link to="/login" className="gold-bg">
+      Driver Login
+    </Link>
+  </>
+) : (
+  <Link
+    to={
+      role === "admin"
+        ? "/dashboard"
+        : role === "staff"
+        ? "/bookings"
+        : "/driver"
+    }
+    className="gold-bg"
+  >
+    Open Dashboard
+  </Link>
+)}
         </div>
       </nav>
 

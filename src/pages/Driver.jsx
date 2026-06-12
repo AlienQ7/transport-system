@@ -39,9 +39,9 @@ export default function Driver() {
 
   return (
     <div className="container-fluid dashboard-page-wrapper px-0">
-      
       {/* Header section */}
       <div className="mb-4 dashboard-header">
+      
         <h1 className="fw-bold m-0">Driver Command Center</h1>
         <p className="text-white m-0 mt-1">Your assigned schedule, fleet vehicle tracking, and details.</p>
       </div>
@@ -122,6 +122,7 @@ export default function Driver() {
             </tbody>
           </table>
         </div>
+        
       </div>
 
     </div>

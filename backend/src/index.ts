@@ -8,8 +8,8 @@ import bookings from "./routes/bookings";
 
 type Bindings = {
   transport_db: D1Database;
+  JWT_SECRET: string;
 };
-
 const app = new Hono<{ Bindings: Bindings }>();
 
 //Dynamically handle local and live frontend origins

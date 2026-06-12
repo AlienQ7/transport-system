@@ -16,6 +16,11 @@ export default function Bookings() {
   const [editingId, setEditingId] = useState(null);
   const [departureTime, setDepartureTime] = useState("");
   const [phone, setPhone] = useState("");
+  const role = localStorage.getItem("role");
+
+  if (role !== "driver") {
+    return <div>Access Denied</div>;
+  }
 
   useEffect(() => {
     loadBookings();
