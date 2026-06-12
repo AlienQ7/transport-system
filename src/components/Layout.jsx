@@ -65,8 +65,8 @@ export default function Layout() {
             <span className="fs-3 fw-bold text-warning d-block">
               Menu
             </span>
-            <small className="text-secondary fw-semibold">
-              SumuDesk {role?.toUpperCase()}
+            <small className="text-white fw-semibold">
+              SmartDesk {role?.toUpperCase()}
             </small>
           </div>
 

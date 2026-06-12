@@ -10,7 +10,7 @@ export default function Home() {
     <div className="home-page">
       <nav className="home-navbar">
         <div className="logo">
-          SumuDesk
+          SmartDesk
         </div>
         <button
           className="hamburger"
@@ -68,7 +68,7 @@ export default function Home() {
         className="hero"
       >
         <h1>
-          FUTURE OF
+          SMART
           <br />
           TRANSPORT
         </h1>
@@ -135,11 +135,11 @@ export default function Home() {
         <h2>Contact</h2>
 
         <p>
-          support@sumudesk.com
+          support@smartdesk.com
         </p>
 
         <p>
-          +91 76408#7###
+          +91 7640867132
         </p>
       </section>
     </div>
