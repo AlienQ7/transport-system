@@ -5,7 +5,7 @@ import "../styles/dashboard.css";
 
 export default function Driver() {
   const [assignedShift, setAssignedShift] = useState({
-    vehicleName: "Sumu",
+    vehicleName: "Sumo",
     licensePlate: "NL8787",
     route: "Kohima to Mon",
     departureTime: "10:0AM",

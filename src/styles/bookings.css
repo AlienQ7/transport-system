@@ -284,3 +284,23 @@
     z-index: 1040;
   }
 }
+
+/* Sidebar menu item base style */
+.sidebar-wrapper .nav-link {
+  transition: all 0.2s ease-in-out;
+  border-radius: 8px;
+}
+
+/* Hover effect */
+.sidebar-wrapper .nav-link:hover {
+  background-color: rgba(255, 193, 7, 0.12);
+  color: white !important;
+  transform: translateX(4px);
+}
+
+/* Active link */
+.active-gold {
+  background-color: var( --accent-gold);
+  color: black !important;
+  font-weight: 600;
+}

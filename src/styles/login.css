@@ -116,7 +116,7 @@
 }
 
 .login-card button[type="submit"]:hover {
-  background-color: var(--accent-gold-hover);
+  background-color: var(--text-light);
 }
 
 /* Close/Back Button (x) styling */

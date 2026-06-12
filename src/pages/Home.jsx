@@ -35,15 +35,15 @@ export default function Home() {
           {!token ? (
   <>
     <Link to="/login" className="gold-bg">
-      Admin Login
+      System Dashboard
     </Link>
 
     <Link to="/login" className="gold-bg">
-      Staff Login
+      Booking Desk
     </Link>
 
     <Link to="/login" className="gold-bg">
-      Driver Login
+      Fleet Portal
     </Link>
   </>
 ) : (

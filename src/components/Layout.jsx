@@ -32,7 +32,7 @@ export default function Layout() {
     >
       {/* Mobile Header */}
       <header className="mobile-header d-lg-none w-100 px-4 py-3 d-flex align-items-center justify-content-between">
-        <span className="fs-4 fw-bold text-warning m-0">SumuDesk</span>
+        <span className="fs-4 fw-bold text-warning m-0">SmartDesk</span>
         <button
           className="btn text-warning border-0 p-0 burger-trigger"
           onClick={() => setIsSidebarOpen(!isSidebarOpen)}
@@ -66,7 +66,7 @@ export default function Layout() {
               Menu
             </span>
             <small className="text-white fw-semibold">
-              SmartDesk {role?.toUpperCase()}
+              SmartDesk : {role?.toUpperCase()}
             </small>
           </div>
 
@@ -133,23 +133,23 @@ export default function Layout() {
             </Link>
             
           )}
-{(role === "admin" || role === "staff") && (
-  <Link
-    to="/scanner"
-    className={`nav-link text-white opacity-75 py-2 px-3 ${isActive("/scanner")}`}
-    onClick={() => setIsSidebarOpen(false)}
-  >
-    Scanner
-  </Link>
-)}
+         {(role === "admin" || role === "staff") && (
+			<Link
+				to="/scanner"
+				className={`nav-link text-white opacity-75 py-2 px-3 ${isActive("/scanner")}`}
+				onClick={() => setIsSidebarOpen(false)}
+			>
+				Scanner
+			</Link>	
+		  )}
           {/* DRIVER LIMITED VIEW once chnage to bookings*/}
           {role === "driver" && (
             <Link
               to="/driver"
-              className={`nav-link text-white opacity-75 py-2 px-3 ${isActive("/bookings")}`}
+              className={`nav-link text-white opacity-75 py-2 px-3 ${isActive("/driver")}`}
               onClick={() => setIsSidebarOpen(false)}
             >
-              My Bookings
+              Bookings
             </Link>
           )}
 
