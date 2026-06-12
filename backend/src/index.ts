@@ -17,6 +17,9 @@ const ALLOWED_ORIGINS = [
   "http://localhost:5173",                 
   "https://transport-system-lru.pages.dev" 
 ];
+app.post("/api/auth/login", (c) => {
+  return c.json({ ok: true });
+});
 app.get("/debug", (c) => {
   return c.json({ ok: true });
 });
