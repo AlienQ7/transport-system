@@ -17,7 +17,9 @@ const ALLOWED_ORIGINS = [
   "http://localhost:5173",                 
   "https://transport-system-lru.pages.dev" 
 ];
-
+app.get("/debug", (c) => {
+  return c.json({ ok: true });
+});
 app.use(
   "*",
   cors({
