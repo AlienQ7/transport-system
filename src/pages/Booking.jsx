@@ -18,6 +18,7 @@ export default function Booking() {
   const [departureTime, setDepartureTime] = useState("");
   const [phone, setPhone] = useState("");
   const [selectedSeat, setSelectedSeat] = useState(null);
+  const [selectedSeats, setSelectedSeats] = useState([]);
   const [occupiedSeats, setOccupiedSeats] = useState([]);
   const selectedVehicle =
       vehicles.find(v => String(v.id) === String(vehicleId));
@@ -28,10 +29,39 @@ export default function Booking() {
       loadRoutes();
       loadVehicles();
     }, []);
-    //after backend fecth remove
    useEffect(() => {
-     setOccupiedSeats([2, 5, 8, 13, 21]);
-    }, []);
+  async function loadOccupiedSeats() {
+    if (!vehicleId || !travelDate || !departureTime) {
+      setOccupiedSeats([]);
+      return;
+    }
+
+    try {
+      const res = await apiFetch(
+        `/api/bookings/seats/${vehicleId}?travel_date=${encodeURIComponent(
+          travelDate
+        )}&departure_time=${encodeURIComponent(departureTime)}`
+      );
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        console.error("Failed to load occupied seats:", data);
+        setOccupiedSeats([]);
+        return;
+      }
+
+      setOccupiedSeats(
+        data.map((booking) => Number(booking.seat_no))
+      );
+    } catch (error) {
+      console.error("Error loading occupied seats:", error);
+      setOccupiedSeats([]);
+    }
+  }
+
+  loadOccupiedSeats();
+}, [vehicleId, travelDate, departureTime]);
     
    const parsedLayout =
   vehicleLayout
