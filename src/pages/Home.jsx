@@ -35,11 +35,11 @@ export default function Home() {
           {!token ? (
   <>
     <Link to="/login" className="gold-bg">
-      System Dashboard
+      Admin Dashboard
     </Link>
 
     <Link to="/login" className="gold-bg">
-      Booking Desk
+      Operator Dashboard
     </Link>
 
     <Link to="/login" className="gold-bg">

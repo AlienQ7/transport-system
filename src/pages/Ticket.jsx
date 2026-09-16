@@ -81,18 +81,6 @@ export default function Ticket() {
       <div>Ticket not found</div>
     </div>
   );
-  //if (booking.payment_status !== "paid") {
-   // return (
-     // <div>
-      //  <h2>Ticket Pending Approval</h2>
-      //  <p>
-         // Your payment has been submitted and is awaiting
-         // admin approval.
-        //</p>
-      //</div>
-    //);
-  //}
-
   return (
   <div 
     className="w-100 d-flex flex-column align-items-center px-3" 

@@ -140,14 +140,6 @@ const numberedLayout =
       return;
     }
     navigate(`/payment/${data.id}`);
-    //alert("Booking Successful");
-    //setCustomerName("");
-    //setRouteId("");
-    //setVehicleId("");
-    //setSeatNo("");
-    //setTravelDate("");
-    //setDepartureTime("");
-    //setSelectedFare(0);
   }
 
   return (

@@ -7,9 +7,7 @@ import "../styles/vehicles.css";
 export default function Vehicles() {
   const [vehicles, setVehicles] = useState([]);
   const [routes, setRoutes] = useState([]);
-
   const [name, setName] = useState("");
-  //const [capacity, setCapacity] = useState("");
   const [routeId, setRouteId] = useState("");
   const [travelDate, setTravelDate] = useState("");
   const [departureTime, setDepartureTime] = useState("");

@@ -7,7 +7,6 @@ export default function Bookings() {
   const [bookings, setBookings] = useState([]);
   const [routes, setRoutes] = useState([]);
   const [vehicles, setVehicles] = useState([]);
-
   const [customerName, setCustomerName] = useState("");
   const [routeId, setRouteId] = useState("");
   const [vehicleId, setVehicleId] = useState("");

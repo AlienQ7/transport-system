@@ -57,7 +57,7 @@ auth.post("/login", async (c) => {
 
   return c.json(
     {
-      error: "Account locked for 30 minutes.",
+      error: "Login Blocked for 30 minutes.",
       locked: true,
       locked_until: lockedUntil,
     },
