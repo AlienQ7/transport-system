@@ -66,7 +66,7 @@ export default function Layout() {
               Menu
             </span>
             <small className="text-white fw-semibold">
-              SmartDesk : {role?.toUpperCase()}
+              EasyReach : {role?.toUpperCase()}
             </small>
           </div>
 

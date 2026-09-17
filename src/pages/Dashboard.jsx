@@ -29,7 +29,7 @@ export default function Dashboard() {
     <div className="container-fluid dashboard-page-wrapper px-0">
       {/* Header section */}
       <div className="mb-4 dashboard-header">
-        <h1 className="fw-bold m-0">SmartDesk Dashboard</h1>
+        <h1 className="fw-bold m-0">EasyReach Dashboard</h1>
         <p className="text-secondary m-0 mt-1">System Operational And Management.</p>
       </div>
 

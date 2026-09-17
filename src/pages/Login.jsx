@@ -77,7 +77,7 @@ export default function Login() {
                 &times;
               </button>
 
-              <h1>SmartDesk Login</h1>
+              <h1>EasyReach Login</h1>
 
               <form onSubmit={login}>
                 <input

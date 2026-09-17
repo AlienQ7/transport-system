@@ -10,7 +10,7 @@ export default function Home() {
     <div className="home-page">
       <nav className="home-navbar">
         <div className="logo">
-          SmartDesk
+          EasyReach
         </div>
         <button
           className="hamburger"
@@ -68,16 +68,13 @@ export default function Home() {
         className="hero"
       >
         <h1>
-          SMART
+          LIM
           <br />
-          TRANSPORT
+          COUNTER
         </h1>
 
         <p>
-          Smart Fleet Management,
-          Intelligent Route Planning,
-          Real-Time Booking and
-          Connected Mobility.
+        Welcome to Lim Travels & Services, your trusted link across Nagaland for over 30 years. From daily passenger Sumos and night buses to reliable parcel delivery connecting Dimapur, Kohima, and Mokokchung, we get you and your shipments where they need to go safely and on time.
         </p>
 
         <div className="hero-buttons">
@@ -135,7 +132,7 @@ export default function Home() {
         <h2>Contact</h2>
 
         <p>
-          support@smartdesk.com
+          support@easyreach.com
         </p>
 
         <p>
