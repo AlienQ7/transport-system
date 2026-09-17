@@ -364,7 +364,7 @@ export default function Home() {
       <div className="separator-skew2"></div>
       <section id="home" className="hero-split">
         <div className="hero-content">
-          <span className="route-badge">📍 Dimapur • Kohima • Mokokchung • Mon • Longleng</span>
+          <span className="route-badge">📍 Dimapur • Kohima • Mokokchung • More</span>
           <h1>
             Reliable Sumo &<br />
             Passenger Services
@@ -408,7 +408,7 @@ export default function Home() {
           />
         </div>
       </section>
-
+      
       {/* 3. Dark Banner Strip */}
       <div className="separator-skew"></div>
       <section className="dark-banner">

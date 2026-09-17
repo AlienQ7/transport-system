@@ -106,6 +106,7 @@ body {
 .nav-links {
   display: flex;
   gap: 20px;
+  z-index: 100;
 }
 
 .nav-links a {
@@ -295,6 +296,7 @@ body {
     border: 1px solid var(--accent-gold);
     border-radius: var(--radius-medium);
     padding: 20px;
+    z-index: 100;
     flex-direction: column;
   }
 
@@ -353,7 +355,7 @@ html, body, #root {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 80px 8% 60px;
+  padding: 50px 8% 60px;
   gap: 40px;
   max-width: 1350px;
   margin: 0 auto;
@@ -383,7 +385,7 @@ html, body, #root {
 }
 
 .hero-content p {
-  font-size: 16px;
+  font-size: 18px;
   color: #c0c0c0;
   line-height: 1.6;
   max-width: 500px;
@@ -408,7 +410,7 @@ html, body, #root {
   display: flex;
   gap: 30px;
   padding-top: 20px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 4px solid rgba(255, 0, 0, 0.7);
 }
 
 .hero-sub-features strong {
@@ -430,18 +432,6 @@ html, body, #root {
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-/* Solid gold accent card placed behind the image frame 
-.hero-gold-backdrop {
-  position: absolute;
-  width: 90%;
-  height: 100%;
-  background-color: var(--accent-gold);
-  border-radius: var(--radius-large);
-  top: 10%;
-  right: -2%;
-  z-index: 1;
 }
 
 /* Clean Vehicle Image Frame */
@@ -699,13 +689,14 @@ html, body, #root {
   color: #a0a0a0;
   line-height: 1.6;
 }
+/*top*/
 .separator-skew {
   width: 75%; 
   max-width: 600px; 
   min-width: 240px; 
   height: 8px;
   background-color: var(--accent-gold);
-  margin: 15px 0 25px auto;
+  margin: 15px 0 20px auto;
   
   /* Skew & Glow */
   transform: skewX(-20deg);
