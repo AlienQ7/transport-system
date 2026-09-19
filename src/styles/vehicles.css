@@ -86,3 +86,128 @@
   color: var(--text-main);
   background-color: rgba(255, 255, 255, 0.02) !important;
 }
+/* tool bar UI */
+ 
+.layout-controls {
+  margin-top: 12px;
+  padding: 16px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.layout-controls-title {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.layout-controls-title span {
+  color: white;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.layout-controls-title small {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 11px;
+}
+
+.layout-tools-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  max-width: 430px;
+}
+
+.layout-tool-card {
+  height: 78px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.05);
+  color: white;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 6px;
+  cursor: pointer;
+
+  transition:
+    transform 0.15s ease,
+    background 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.layout-tool-card:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.layout-tool-card:active {
+  transform: scale(0.96);
+}
+
+.tool-symbol {
+  width: 32px;
+  height: 32px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 9px;
+
+  font-size: 17px;
+  font-weight: 800;
+
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.tool-name {
+  font-size: 11px;
+  font-weight: 600;
+  opacity: 0.8;
+}
+
+/* Individual tool accents */
+
+.seat-tool .tool-symbol {
+  color: #22c55e;
+}
+
+.reserved-tool .tool-symbol {
+  color: #f59e0b;
+}
+
+.driver-tool .tool-symbol {
+  color: #94a3b8;
+}
+
+.empty-tool .tool-symbol {
+  color: #e5e7eb;
+}
+
+.row-tool .tool-symbol {
+  color: #60a5fa;
+  font-size: 22px;
+}
+
+.delete-tool .tool-symbol {
+  color: #f87171;
+  font-size: 20px;
+}
+
+.layout-tool-card:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.layout-tool-card:disabled:hover {
+  transform: none;
+  background: rgba(255, 255, 255, 0.05);
+}

@@ -246,7 +246,8 @@ if (cell === "R") {
 </div>
             <div className="col-12">
   <label className="form-label text-white small fw-semibold">
-    Vehicle Layout
+    Vehicle Layout <br />
+    <span className="text-danger">*Use Portrait Orientation</span> <br />
   </label>
 
   <textarea
@@ -257,55 +258,88 @@ if (cell === "R") {
   />
 </div>
 
-{/*Button fo BNRD */}
-<div className="d-flex gap-2 mb-2">
-  <button
-    type="button"
-    className="btn btn-success"
-    onClick={() => setLayout(layout + "S")}
-  >
-    (S)Seat
-  </button>
+ 
+{/* Vehicle Layout Controls */}
+<div className="layout-controls">
 
-  <button
-    type="button"
-    className="btn btn-secondary"
-    onClick={() => setLayout(layout + "R")}
-  >
-    (R)Reserved
-  </button>
+  <div className="layout-controls-title">
+    <span>Layout Tools</span>
+    <small>Click an element to add it</small>
+  </div>
 
-  <button
-    type="button"
-    className="btn btn-dark"
-    onClick={() => setLayout(layout + "D")}
-  >
-    (D)Driver
-  </button>
+  <div className="layout-tools-grid">
 
-  <button
-    type="button"
-    className="btn btn-light"
-    onClick={() => setLayout(layout + "N")}
-  >
-    Empty
-  </button>
+    <button
+      type="button"
+      className="layout-tool-card seat-tool"
+      onClick={() => setLayout(layout + "S")}
+      title="Add Seat"
+    >
+      <div className="tool-symbol">S</div>
+      <div className="tool-name">Seat</div>
+    </button>
 
-  <button
-    type="button"
-    className="btn btn-primary"
-    onClick={() => setLayout(layout + "\n")}
-  >
-    New Row
-  </button>
+    <button
+      type="button"
+      className="layout-tool-card reserved-tool"
+      onClick={() => setLayout(layout + "R")}
+      title="Add Reserved Seat"
+    >
+      <div className="tool-symbol">R</div>
+      <div className="tool-name">Reserved</div>
+    </button>
+
+    <button
+      type="button"
+      className="layout-tool-card driver-tool"
+      onClick={() => setLayout(layout + "D")}
+      title="Add Driver"
+    >
+      <div className="tool-symbol">D</div>
+      <div className="tool-name">Driver</div>
+    </button>
+
+    <button
+      type="button"
+      className="layout-tool-card empty-tool"
+      onClick={() => setLayout(layout + "N")}
+      title="Add Empty Space"
+    >
+      <div className="tool-symbol">E</div>
+      <div className="tool-name">Space</div>
+    </button>
+
+    <button
+      type="button"
+      className="layout-tool-card row-tool"
+      onClick={() => setLayout(layout + "\n")}
+      title="Start New Row"
+    >
+      <div className="tool-symbol">↵</div>
+      <div className="tool-name">New Row</div>
+    </button>
+
+    <button
+      type="button"
+      className="layout-tool-card delete-tool"
+      onClick={() => setLayout(layout.slice(0, -1))}
+      disabled={!layout}
+      title="Remove Last Symbol"
+    >
+      <div className="tool-symbol">⌫</div>
+      <div className="tool-name">Delete</div>
+    </button>
+
+  </div>
+
 </div>
+
 <div className="col-12">
   <div className="alert alert-info py-2 mb-0">
     Total Seats Available: <strong>{capacity}</strong>
   </div>
 </div>
-
-          </div>
+</div>
 
           {/* Form Action Triggers */}
           <div className="d-flex justify-content-end gap-2 mt-4">
@@ -320,7 +354,7 @@ if (cell === "R") {
               </button>
             )}
             <button type="submit" className="btn btn-gold-action px-4">
-              {editingId ? "Save Fleet Changes" : "Deploy Fleet Unit"}
+              {editingId ? "Save Fleet Changes" : "Save"}
             </button>
           </div>
         </form>

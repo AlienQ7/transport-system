@@ -159,7 +159,7 @@ const numberedLayout =
       {/* Top Title Header */}
       <div className="mb-4 text-center text-lg-start">
         <h1 className="fw-bold m-0 booking-page-title">Book Ticket</h1>
-        <p className="text-white m-0 mt-1">Issue fresh seats, assign active passenger, and generate transit records.</p>
+        <p className="text-white m-0 mt-1">Ensure your ticket is safe and ready for entry.</p>
       </div>
 
       {/* Main Integrated Grid Panel */}
@@ -352,6 +352,8 @@ const isSelected =
     {" "}
     {selectedSeat || "None"}
   </h6>
+  <p>Please note: You have 10 minutes to complete your booking. If the timer expires, your selected seats will be released for others to choose.
+  </p>
 </div>
 		</div></div>
 						{/* Right Quick Summary Dashboard Badge Column */}

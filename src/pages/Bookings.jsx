@@ -95,7 +95,6 @@ export default function Bookings() {
         phone_number: phone,
         travel_date: travelDate,
         departure_time: departureTime,
-        payment_status: "pending",
         status: "active",
       }),
     });
@@ -116,12 +115,19 @@ export default function Bookings() {
     loadBookings();
   }
   async function approvePayment(id) {
-    await apiFetch(`/api/bookings/${id}/approve`, {
-      method: "PUT",
-    });
+  const res = await apiFetch(`/api/bookings/${id}/approve`, {
+    method: "PUT",
+  });
 
-    loadBookings();
+  const data = await res.json();
+
+  if (!res.ok) {
+    alert(data.error || "Failed to approve payment");
+    return;
   }
+
+  await loadBookings();
+}
 
   function editBooking(booking) {
     setEditingId(booking.id);
@@ -233,7 +239,6 @@ export default function Bookings() {
                     <th>Route</th>
                     <th>Status</th>
                     <th>Payment</th>
-                    <th>UTR</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
@@ -252,49 +257,45 @@ export default function Bookings() {
                         {booking.source} {" → "} {booking.destination}
                       </td>
                       <td>
-                        <span className={`badge-status ₹{booking.status}`}>
+                        <span className={`badge-status ${booking.status}`}>
                           {booking.status}
                         </span>
                       </td>
                       <td>
-						<span className={`badge-payment ₹{booking.payment_status}`}>
+						<span className={`badge-payment ${booking.payment_status}`}>
 							{booking.payment_status}
 						</span>
 					</td>
 
 					<td>
-							{booking.payment_utr || "-"}
-					</td>
+  <button onClick={() => editBooking(booking)}>
+    Edit
+  </button>
 
-					<td>
-						<button onClick={() => editBooking(booking)}>
-							Edit
-						</button>
+  <button onClick={() => deleteBooking(booking.id)}>
+    Delete
+  </button>
 
-					   <button onClick={() => deleteBooking(booking.id)}>
-							Delete
-					   </button>
+  {/* Manual/offline payment approval */}
+  {booking.payment_status !== "paid" && (
+    <button
+      onClick={() => approvePayment(booking.id)}
+    >
+      Approve
+    </button>
+  )}
 
-						{booking.payment_status !== "paid" &&
-							booking.payment_utr && (
-					   <button
-						   onClick={() =>
-						   approvePayment(booking.id)
-					   }
-					   >
-				    	   	Approve
-					   </button>
-					   )}
-					   {booking.payment_status === "paid" && (
-					   <button
-					    	onClick={() =>
-		    		  window.open(`/ticket/₹{booking.id}`, "_blank")
-				    	}
-				    	>
-				    		View Ticket
-				     	</button>
-						)}
-						</td>
+  {/* Paid bookings can view their ticket */}
+  {booking.payment_status === "paid" && (
+    <button
+      onClick={() =>
+        window.open(`/ticket/${booking.id}`, "_blank")
+      }
+    >
+      View Ticket
+    </button>
+  )}
+</td>
                       <td>
                       </td>
                     </tr>
