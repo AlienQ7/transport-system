@@ -32,7 +32,9 @@ export default function Layout() {
     >
       {/* Mobile Header */}
       <header className="mobile-header d-lg-none w-100 px-4 py-3 d-flex align-items-center justify-content-between">
-        <span className="fs-4 fw-bold text-warning m-0">SmartDesk</span>
+      <Link to="/" className="text-decoration-none fs-4 fw-bold text-warning m-0">
+          EasyReach
+        </Link>
         <button
           className="btn text-warning border-0 p-0 burger-trigger"
           onClick={() => setIsSidebarOpen(!isSidebarOpen)}

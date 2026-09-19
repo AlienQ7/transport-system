@@ -13,7 +13,7 @@ export default function InstallPWAButton() {
       <div className="pwa-install-card">
 
         <div>
-          <strong>SmartDesk</strong>
+          <strong>EasyReach</strong>
           <div className="pwa-install-sub">
             Install for faster access & offline use
           </div>
