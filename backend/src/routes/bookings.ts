@@ -928,8 +928,8 @@ bookings.post("/:id/cashfree-order", async (c) => {
         },
 
         order_meta: {
-          return_url: `http://localhost:5173/ticket/${booking.id}`,
-          // return_url: `https://transport-system-lru.pages.dev/ticket/${booking.id}`,
+          // return_url: `http://localhost:5173/ticket/${booking.id}`,
+          return_url: `https://transport-system-lru.pages.dev/ticket/${booking.id}`,
         },
 
         order_note: `Transport booking #${booking.id}`,
