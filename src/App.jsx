@@ -6,7 +6,6 @@ import Booking from "./pages/Booking";
 import Payment from "./pages/Payment";
 import Ticket from "./pages/Ticket";
 import TicketStatus from "./pages/TicketStatus";
-
 import Dashboard from "./pages/Dashboard";
 import RoutesPage from "./pages/Routes";
 import Vehicles from "./pages/Vehicles";
@@ -14,11 +13,16 @@ import Bookings from "./pages/Bookings";
 import Scanner from "./pages/Scanner";
 import Staff from "./pages/Staff";
 import Driver from "./pages/Driver";
-
 import Layout from "./components/Layout";
 import ProtectedRoute from "./components/ProtectedRoute";
 import InstallPWAButton from "./components/InstallPWAButton";
 import RoleGuard from "./components/RoleGuard";
+import About from "./pages/About"; 
+import Services from "./pages/Services"; 
+import Contact from "./pages/Contact"; 
+import PrivacyPolicy from "./pages/PrivacyPolicy"; 
+import RefundPolicy from "./pages/RefundPolicy"; 
+import Terms from "./pages/Terms";
 
 export default function App() {
   return (
@@ -34,6 +38,12 @@ export default function App() {
         <Route path="/payment/:id" element={<Payment />} />
         <Route path="/ticket/:id" element={<Ticket />} />
         <Route path="/ticket-status/:code" element={<TicketStatus />} />
+        <Route path="/about" element={<About />} /> 
+        <Route path="/services" element={<Services />} /> 
+        <Route path="/contact" element={<Contact />} /> 
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} /> 
+        <Route path="/refund-policy" element={<RefundPolicy />} /> 
+        <Route path="/terms" element={<Terms />} />
 
         {/* ================= PROTECTED AREA ================= */}
 <Route

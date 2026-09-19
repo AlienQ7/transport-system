@@ -194,7 +194,7 @@ export default function Home() {
       <section className="impact-section">
         <div className="impact-cards">
           <div className="stat-card">
-            <h3>30+</h3>
+            <h3>10+</h3>
             <p>Years of Service</p>
           </div>
           <div className="stat-card">
@@ -216,12 +216,48 @@ export default function Home() {
       </section>
        <div className="separator-skew2"></div>
        
-      {/* 6. Contact Section */}
+      {/* 6. Contact Section 
       <section id="contact" className="contact-section">
         <h2>Need Assistance?</h2>
         <p>support@easyreach.com</p>
         <p>+91 7640867132</p>
-      </section>
+      </section> */}
+      {/* 7. Footer */}
+<footer className="site-footer">
+  <div className="footer-main">
+    <div className="footer-brand">
+      <div className="footer-logo">EasyReach</div>
+      <p>
+        Reliable passenger transport, ticket booking and parcel services
+        across Nagaland.
+      </p>
+    </div>
+
+    <div className="footer-links-group">
+      <h4>Company</h4>
+      <Link to="/about">About Us</Link>
+      <Link to="/services">Services</Link>
+      <Link to="/contact">Contact Us</Link>
+    </div>
+
+    <div className="footer-links-group">
+      <h4>Policies</h4>
+      <Link to="/privacy-policy">Privacy Policy</Link>
+      <Link to="/refund-policy">Refund & Cancellation</Link>
+      <Link to="/terms">Terms & Conditions</Link>
+    </div>
+
+    <div className="footer-contact">
+      <h4>Contact</h4>
+      <p>easyreach010gmail.com</p>
+      <p>+91 7640867132</p>
+    </div>
+  </div>
+
+  <div className="footer-bottom">
+    <span>© 2026 EasyReach. All rights reserved.</span>
+  </div>
+</footer>
     </div>
   );
 }
