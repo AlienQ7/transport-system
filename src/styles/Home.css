@@ -542,7 +542,7 @@ html, body, #root {
   font-size: 15px;
 }
 
-/.features-grid {
+.features-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 25px;
