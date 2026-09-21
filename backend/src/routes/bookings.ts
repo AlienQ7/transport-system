@@ -26,7 +26,46 @@ bookings.post("/", async (c) => {
       400
     );
   }
+  const vehicle = await c.env.transport_db
+  .prepare(`
+    SELECT
+      id,
+      route_id,
+      fare
+    FROM vehicles
+    WHERE id = ?
+  `)
+  .bind(vehicle_id)
+  .first();
 
+if (!vehicle) {
+  return c.json(
+    {
+      error: "Vehicle not found",
+    },
+    404
+  );
+}
+
+if (Number(vehicle.route_id) !== Number(route_id)) {
+  return c.json(
+    {
+      error: "Selected vehicle does not belong to the selected route",
+    },
+    400
+  );
+}
+
+const bookingFare = Number(vehicle.fare);
+
+if (!Number.isFinite(bookingFare) || bookingFare <= 0) {
+  return c.json(
+    {
+      error: "Invalid vehicle fare",
+    },
+    400
+  );
+}
   // Expire old payment holds before checking the seat
   const now = new Date().toISOString();
 
@@ -71,7 +110,6 @@ bookings.post("/", async (c) => {
       400
     );
   }
-
   // Hold this seat for 10 minutes
   const paymentExpiresAt = new Date(
     Date.now() + 10 * 60 * 1000
@@ -86,6 +124,7 @@ bookings.post("/", async (c) => {
         route_id,
         vehicle_id,
         seat_no,
+        fare,
         status,
         payment_status,
         payment_expires_at,
@@ -93,13 +132,14 @@ bookings.post("/", async (c) => {
         departure_time,
         phone_number
       )
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `)
     .bind(
       customer_name,
       route_id,
       vehicle_id,
       seat_no,
+      bookingFare,
       "payment_pending",
       "pending",
       paymentExpiresAt,
@@ -146,12 +186,15 @@ bookings.post("/:id/cashfree-order", async (c) => {
         b.customer_name,
         b.phone_number,
         b.route_id,
+        b.vehicle_id,
+        b.fare,
         b.payment_status,
         r.source,
         r.destination,
-        r.fare
+        v.name AS vehicle_name
       FROM bookings b
       JOIN routes r ON r.id = b.route_id
+      JOIN vehicles v ON v.id = b.vehicle_id
       WHERE b.id = ?
     `)
     .bind(id)
@@ -394,7 +437,7 @@ bookings.post("/:id/verify-cashfree", async (c) => {
   });
 });
 
-// Get All Bookings
+// Get All Bookings (Admin fare not shown)
 //bookings.get("/", async (c) => {
 bookings.get("/", authMiddleware, async (c) => {
   const result = await c.env.transport_db
@@ -439,6 +482,7 @@ bookings.get("/:id", async (c) => {
         b.route_id,
         b.vehicle_id,
         b.seat_no,
+        b.fare,
         b.status,
         b.payment_status,
         b.created_at,
@@ -450,10 +494,12 @@ bookings.get("/:id", async (c) => {
         b.is_used,
         r.source,
         r.destination,
-        r.fare
+        v.name AS vehicle_name
       FROM bookings b
       LEFT JOIN routes r
         ON r.id = b.route_id
+      LEFT JOIN vehicles v
+        ON v.id = b.vehicle_id
       WHERE b.id = ?
     `)
     .bind(id)

@@ -46,13 +46,7 @@ export default function App() {
         <Route path="/terms" element={<Terms />} />
 
         {/* ================= PROTECTED AREA ================= */}
-<Route
-  element={
-    <ProtectedRoute>
-      <Layout />
-    </ProtectedRoute>
-  }
->
+       <Route element={ <ProtectedRoute> <Layout /> </ProtectedRoute> } >
 
   {/* ADMIN ONLY */}
   <Route

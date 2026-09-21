@@ -169,7 +169,7 @@ const numberedLayout =
             
             {/* Left Data Entry Fields Form Column */}
             <div className="col-12 col-lg-8">
-              <h5 className="fw-semibold mb-3 text-white text-center text-lg-start">Passenger Details & Operations</h5>
+              <h5 className="fw-semibold mb-3 text-white text-center text-lg-start">Passenger Details</h5>
               
               <div className="row g-3">
                 <div className="col-12">
@@ -178,6 +178,7 @@ const numberedLayout =
                     className="form-control dark-form-input "
                     placeholder="Enter full legal passenger name"
                     value={customerName}
+                    maxLength={100} 
                     onChange={(e) => setCustomerName(e.target.value)}
                     required
                   />
@@ -187,7 +188,7 @@ const numberedLayout =
                   <input
 						type="text" 
 						className="form-control dark-form-input"
-						placeholder="Enter Valid Phone number"
+						placeholder="Enter a valid phone number (numbers, spaces, or country code allowed)"
 						value={phone}
 						onChange={(e) => setPhone(e.target.value)}
 						maxLength={14} 
@@ -198,50 +199,68 @@ const numberedLayout =
 				</div>
 
                 <div className="col-12 col-md-6">
-                  <label className="form-label text-white small fw-semibold">Route</label>
-                  <select
-                    className="form-select dark-form-select"
-                    value={routeId}
-                    onChange={(e) => {
-                      const id = e.target.value;
-                      setRouteId(id);
-                      const route = routes.find((r) => String(r.id) === id);
-                      setSelectedFare(route ? route.fare : 0);
-                    }}
-                    required
-                  >
-                    <option value="">Select Target Route...</option>
-                    {routes.map((route) => (
-                      <option key={route.id} value={route.id}>
-                        {route.source} &rarr; {route.destination}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+  <label className="form-label text-white small fw-semibold">
+    Route
+  </label>
+
+  <select
+    className="form-select dark-form-select"
+    value={routeId}
+    onChange={(e) => {
+      const id = e.target.value;
+      setRouteId(id);
+
+      // Reset vehicle and fare when route changes
+      setVehicleId("");
+      setSelectedFare(0);
+      setTravelDate("");
+      setDepartureTime("");
+    }}
+    required
+  >
+    <option value="">Select Target Route...</option>
+
+    {routes.map((route) => (
+      <option key={route.id} value={route.id}>
+        {route.source} &rarr; {route.destination}
+      </option>
+    ))}
+  </select>
+</div>
 
                 <div className="col-12 col-md-6">
-                  <label className="form-label text-white small fw-semibold">Vehicle</label>
-                  <select
-                    className="form-select dark-form-select"
-                    value={vehicleId}
-                    onChange={(e) => {
-                      const id = e.target.value;
-                      setVehicleId(id);
-                      const vehicle = vehicles.find((v) => String(v.id) === String(id));
-                      setTravelDate(vehicle?.travel_date || "");
-                      setDepartureTime(vehicle?.departure_time || "");
-                    }}
-                    required
-                  >
-                    <option value="">Select Assigned Vehicle...</option>
-                    {vehicles.map((vehicle) => (
-                      <option key={vehicle.id} value={vehicle.id}>
-                        {vehicle.name}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+  <label className="form-label text-white small fw-semibold">
+    Vehicle
+  </label>
 
+  <select
+    className="form-select dark-form-select"
+    value={vehicleId}
+    onChange={(e) => {
+      const id = e.target.value;
+      setVehicleId(id);
+
+      const vehicle = vehicles.find(
+        (v) => String(v.id) === String(id)
+      );
+
+      setTravelDate(vehicle?.travel_date || "");
+      setDepartureTime(vehicle?.departure_time || "");
+      setSelectedFare(vehicle?.fare || 0);
+    }}
+    required
+  >
+    <option value="">Select Assigned Vehicle...</option>
+
+    {vehicles
+      .filter((vehicle) => String(vehicle.route_id) === String(routeId))
+      .map((vehicle) => (
+        <option key={vehicle.id} value={vehicle.id}>
+          {vehicle.name} — ₹{Number(vehicle.fare || 0).toLocaleString("en-IN")}
+        </option>
+      ))}
+  </select>
+</div>
                {/*render layout*/} 
              <div className="d-flex flex-column gap-2">
   
@@ -359,16 +378,13 @@ const isSelected =
 						{/* Right Quick Summary Dashboard Badge Column */}
 				<div className="col-12 col-lg-4 d-flex flex-column">
 					<h5 className="fw-semibold mb-3 text-white text-center text-lg-start">Invoice Overview</h5>
-              
 				<div className="ticket-summary-badge flex-grow-1 d-flex flex-column justify-content-between">
-                
                 <div className="mb-4 text-center py-2">
-                  <span className="text-secondary small d-block text-uppercase tracking-wider fw-semibold mb-1">Standard Route Fare</span>
+                  <span className="text-secondary small d-block text-uppercase tracking-wider fw-semibold mb-1">Total Fare</span>
                   <h2 className="m-0 fw-extrabold text-warning" style={{ fontSize: "36px" }}>
                     ₹{Number(selectedFare).toLocaleString("en-IN")}
                   </h2>
                 </div>
-
                 <div className="d-flex flex-column gap-2">
                   <div className="meta-schedule-box d-flex justify-content-between align-items-center">
                     <span className="small text-secondary fw-medium">📅 Travel Date</span>
@@ -388,7 +404,7 @@ const isSelected =
           {/* Submission Row Area */}
           <div className="d-flex justify-content-center justify-content-lg-end mt-4 pt-3 border-top" style={{ borderColor: "var(--border-muted)" }}>
             <button type="submit" className="btn btn-confrim px-5 fw-bold w-100 w-lg-auto">
-              Confirm Ticket Issuance &rarr;
+              Confirm Ticket &rarr;
             </button>
           </div>
         </form>

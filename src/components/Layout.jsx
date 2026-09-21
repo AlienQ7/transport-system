@@ -36,11 +36,14 @@ export default function Layout() {
           EasyReach
         </Link>
         <button
-          className="btn text-warning border-0 p-0 burger-trigger"
-          onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-        >
-          <span className="fs-2">☰</span>
-        </button>
+  className="btn text-warning border-0 p-0 burger-trigger"
+  onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+>
+  <div className="d-flex flex-column align-items-center">
+    <span className="fw-bold mb-0 text-uppercase" style={{ fontSize: '0.65rem', letterSpacing: '0.5px', opacity: 0.9 }}>menu</span>
+    <span className="fs-1 lh-1" style={{ marginTop: '-2px' }}>☰</span>
+  </div>
+</button>
       </header>
 
       {/* Overlay */}

@@ -7,7 +7,6 @@ export default function Routes() {
   const [routes, setRoutes] = useState([]);
   const [source, setSource] = useState("");
   const [destination, setDestination] = useState("");
-  const [fare, setFare] = useState("");
   const [editingId, setEditingId] = useState(null);
 
   useEffect(() => {
@@ -22,19 +21,12 @@ export default function Routes() {
 
   async function createRoute(e) {
     e.preventDefault();
-    const fareValue = Number(fare);
-
-    if (fareValue < 0) {
-       alert("Fare cannot be negative");
-       return;
-    }
-
+ 
     await apiFetch("/api/routes", {
       method: "POST",
       body: JSON.stringify({
         source,
         destination,
-        fare: Number(fare),
       }),
     });
 
@@ -44,26 +36,18 @@ export default function Routes() {
 
   async function updateRoute(e) {
     e.preventDefault();
-    const fareValue = Number(fare);
-
-    if (fareValue < 0) {
-      alert("Fare cannot be negative");
-      return;
-    }
 
     await apiFetch(`/api/routes/${editingId}`, {
       method: "PUT",
       body: JSON.stringify({
         source,
         destination,
-        fare: Number(fare),
       }),
     });
 
     resetForm();
     loadRoutes();
   }
-
   async function deleteRoute(id) {
     if (!window.confirm("Delete this route?")) {
       return;
@@ -80,16 +64,13 @@ export default function Routes() {
     setEditingId(route.id);
     setSource(route.source);
     setDestination(route.destination);
-    setFare(route.fare);
   }
 
   function resetForm() {
     setEditingId(null);
     setSource("");
     setDestination("");
-    setFare("");
   }
-
   return (
     <div className="container-fluid px-0 text-white">
       
@@ -107,7 +88,7 @@ export default function Routes() {
         
         <form onSubmit={editingId ? updateRoute : createRoute}>
           <div className="row g-3">
-            <div className="col-12 col-md-4">
+            <div className="col-12 col-md-6">
               <label className="form-label text-white small fw-semibold">Starting Location</label>
               <input
                 className="form-control dark-form-input"
@@ -118,27 +99,13 @@ export default function Routes() {
               />
             </div>
 
-            <div className="col-12 col-md-4">
+            <div className="col-12 col-md-6">
               <label className="form-label text-white small fw-semibold">Destination</label>
               <input
                 className="form-control dark-form-input"
                 placeholder="e.g.,Mon"
                 value={destination}
                 onChange={(e) => setDestination(e.target.value)}
-                required
-              />
-            </div>
-
-            <div className="col-12 col-md-4">
-              <label className="form-label text-white small fw-semibold">Route Fare Cost</label>
-              <input
-                type="number"
-                min="0"
-                step="1"
-                className="form-control dark-form-input"
-                placeholder="0.00"
-                value={fare}
-                onChange={(e) => setFare(e.target.value)}
                 required
               />
             </div>
@@ -166,7 +133,7 @@ export default function Routes() {
       {/* Responsive Fleet Routes Grid Viewport */}
       <div className="card routes-management-card shadow-sm overflow-hidden">
         <div className="px-4 py-3 border-bottom" style={{ borderColor: "var(--border-muted)" }}>
-          <h5 className="m-0 fw-semibold text-white">System Active Manifest</h5>
+          <h5 className="m-0 fw-semibold text-white">Route Details</h5>
         </div>
         <div className="table-responsive">
           <table className="table table-dark custom-dark-table m-0">
@@ -175,15 +142,14 @@ export default function Routes() {
                 <th style={{ width: "80px" }}>ID</th>
                 <th>Starting Source</th>
                 <th>Destination Target</th>
-                <th>Standard Fare</th>
-                <th className="text-end" style={{ width: "200px" }}>Management Actions</th>
+                <th className="text-end" style={{ width: "200px" }}>Management</th>
               </tr>
             </thead>
 
             <tbody>
               {routes.length === 0 ? (
                 <tr>
-                  <td colSpan="5" className="text-center py-4 text-white small">
+                  <td colSpan="4" className="text-center py-4 text-white small">
                     No active transport routes loaded in system registry.
                   </td>
                 </tr>
@@ -193,9 +159,6 @@ export default function Routes() {
                     <td className="fw-semibold text-white">{route.id}</td>
                     <td>{route.source}</td>
                     <td>{route.destination}</td>
-                    <td>
-                      <span className="text-warning fw-medium">₹{Number(route.fare).toFixed(2)}</span>
-                    </td>
                     <td>
                       <div className="d-flex justify-content-end gap-2">
                         <button

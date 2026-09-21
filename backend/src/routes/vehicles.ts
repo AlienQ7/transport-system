@@ -15,6 +15,7 @@ vehicles.post("/", authMiddleware, async (c) => {
     route_id,
     travel_date,
     departure_time,
+    fare,
   } = await c.req.json();
 
   if (Number(capacity) <= 0) {
@@ -29,7 +30,7 @@ vehicles.post("/", authMiddleware, async (c) => {
 
   const result = await c.env.transport_db
     .prepare(
-  "INSERT INTO vehicles (name, capacity, layout, route_id, travel_date, departure_time) VALUES (?, ?, ?, ?, ?, ?)"
+  "INSERT INTO vehicles (name, capacity, layout, route_id, travel_date, departure_time, fare) VALUES (?, ?, ?, ?, ?, ?, ?)"
 )
 .bind(
   name,
@@ -37,7 +38,8 @@ vehicles.post("/", authMiddleware, async (c) => {
   layout,
   route_id,
   travel_date,
-  departure_time
+  departure_time,
+  fare
 )
     .run();
 
@@ -59,6 +61,7 @@ vehicles.get("/", async (c) => {
         v.route_id,
         v.travel_date,
         v.departure_time,
+        v.fare,
         r.source,
         r.destination
       FROM vehicles v
@@ -105,6 +108,7 @@ vehicles.put("/:id", authMiddleware, async (c) => {
     route_id,
     travel_date,
     departure_time,
+    fare,
   } = await c.req.json();
 
   if (Number(capacity) <= 0) {
@@ -119,7 +123,7 @@ vehicles.put("/:id", authMiddleware, async (c) => {
 
   await c.env.transport_db
   .prepare(
-    "UPDATE vehicles SET name=?, capacity=?,layout=?, route_id=?, travel_date=?, departure_time=? WHERE id=?"
+    "UPDATE vehicles SET name=?, capacity=?,layout=?, route_id=?, travel_date=?, departure_time=?, fare=? WHERE id=?"
   )
   .bind(
     name,
@@ -128,6 +132,7 @@ vehicles.put("/:id", authMiddleware, async (c) => {
     route_id,
     travel_date,
     departure_time,
+    fare,
     id
   )
   .run();

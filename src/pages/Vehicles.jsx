@@ -12,8 +12,8 @@ export default function Vehicles() {
   const [travelDate, setTravelDate] = useState("");
   const [departureTime, setDepartureTime] = useState("");
   const [editingId, setEditingId] = useState(null);
-  // seat layout
   const [layout, setLayout] = useState(``);
+  const [fare, setFare] = useState("");
   const capacity =
   (layout.match(/[SR]/g) || []).length;
   
@@ -54,6 +54,7 @@ export default function Vehicles() {
         route_id: Number(routeId),
         travel_date: travelDate,
         departure_time: departureTime,
+        fare: Number(fare),
       }),
     });
 
@@ -79,6 +80,7 @@ export default function Vehicles() {
         route_id: Number(routeId),
         travel_date: travelDate,
         departure_time: departureTime,
+        fare: Number(fare),
       }),
     });
 
@@ -105,6 +107,7 @@ export default function Vehicles() {
     setRouteId(vehicle.route_id);
     setTravelDate(vehicle.travel_date || "");
     setDepartureTime(vehicle.departure_time || "");
+    setFare(vehicle.fare ?? "");
   }
   
   function resetForm() {
@@ -114,6 +117,7 @@ export default function Vehicles() {
     setRouteId("");
     setTravelDate("");
     setDepartureTime("");
+    setFare("");
   }
 
   return (
@@ -183,6 +187,21 @@ export default function Vehicles() {
                 ))}
               </select>
             </div>
+            <div className="col-12 col-md-4">
+  <label className="form-label text-white small fw-semibold">
+    Vehicle Fare (₹)
+  </label>
+
+  <input
+    type="number"
+    min="0"
+    className="form-control dark-form-input"
+    placeholder="e.g. 500"
+    value={fare}
+    onChange={(e) => setFare(e.target.value)}
+    required
+  />
+</div>
             {/* Layout preivew*/}
 <div className="col-12">
   <label className="form-label text-white small fw-semibold">
@@ -373,6 +392,7 @@ if (cell === "R") {
                 <th>Vehicle Plate</th>
                 <th>Capacity Limit</th>
                 <th>Travel Date</th>
+                <th>Fare</th>
                 <th>Departure</th>
                 <th>Origin Source</th>
                 <th>Destination</th>
@@ -401,6 +421,7 @@ if (cell === "R") {
                     <td>{vehicle.departure_time}</td>
                     <td>{vehicle.source}</td>
                     <td>{vehicle.destination}</td>
+                    <td>₹{Number(vehicle.fare || 0).toFixed(2)}</td>
                     <td>
                       <div className="d-flex justify-content-end gap-2">
                         <button
