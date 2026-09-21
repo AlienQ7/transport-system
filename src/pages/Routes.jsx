@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { apiFetch } from "../services/api";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "../styles/routes.css"; // Imports the newly structured variable styles
+import "../styles/routes.css"; 
 
 export default function Routes() {
   const [routes, setRoutes] = useState([]);
@@ -77,7 +77,7 @@ export default function Routes() {
       {/* Dynamic Action Header Title Row */}
       <div className="mb-4">
         <h1 className="fw-bold m-0 routes-page-title">Routes Management</h1>
-        <p className="text-white m-0 mt-1">Configure locations, adjust operational fares, and manage active system transits.</p>
+        <p className="text-white m-0 mt-1">Configure locations and manage active routes.</p>
       </div>
 
       {/* Management Control Input Card */}

@@ -183,7 +183,7 @@ export default function Layout() {
   <div className="w-100 d-flex justify-content-start mb-4">
     <button
       onClick={() => navigate(-1)}
-      className="btn btn-back-arrow d-inline-flex align-items-center gap-2 py-2 px-3"
+      className="btn btn-back-arrow d-inline-flex align-items-center gap-2 py-2 px-3 "
     >
       <span>&larr;</span> Back
     </button>

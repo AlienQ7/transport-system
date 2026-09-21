@@ -115,12 +115,12 @@ body {
 
 .hamburger {
   display: none;
+  color: var(--accent-gold);
   background: none;
   border: none;
-  color: var(--accent-gold);
-  font-size: 28px;
   cursor: pointer;
 }
+
 
 /* 
    3. BOOKINGS DASHBOARD*/
@@ -282,7 +282,7 @@ body {
 /* 4. RESPONSIVE MEDIA QUERIES*/
 @media (max-width: 768px) {
   .hamburger {
-    display: block;
+    display: inline-flex !important;
   }
 
   .nav-links {
@@ -298,6 +298,11 @@ body {
     z-index: 100;
     flex-direction: column;
   }
+
+  .nav-links.active {
+    display: flex;
+  }
+}
 
   .nav-links.active {
     display: flex;
@@ -542,7 +547,7 @@ html, body, #root {
   font-size: 15px;
 }
 
-.features-grid {
+/.features-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 25px;
@@ -928,11 +933,7 @@ max-width: 100%;
 flex-direction: column;
 justify-content: center;
 text-align: center;
-
-```
 margin-top: 40px;
-```
-
 }
 
 .footer-location {
@@ -954,3 +955,4 @@ gap: 30px;
 grid-column: auto;
 }
 }
+

@@ -12,20 +12,42 @@ export default function Home() {
       {/* 1. Header Navigation */}
       <nav className="home-navbar">
         <div className="logo">EasyReach</div>
-       <button
-  className="hamburger"
-  onClick={() => setMenuOpen(!menuOpen)}
-  style={{ display: 'inline-flex', flexDirection: 'column', alignItems: 'center', background: 'none', border: 'none', padding: 0, cursor: 'pointer' }}
->
-  {!menuOpen && (
-    <span style={{ fontSize: '0.65rem', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '1px', opacity: 0.9 }}>
-      menu
-    </span>
-  )}
-  <span style={{ fontSize: menuOpen ? '2.81rem' : '1.90rem', lineHeight: 1, marginTop: menuOpen ? '0px' : '-2px' }}>
-    {menuOpen ? 'X' : '☰'}
-  </span>
-</button>
+			<button
+				className="hamburger"
+				onClick={() => setMenuOpen(!menuOpen)}
+				style={{
+					flexDirection: 'column',
+					alignItems: 'center',
+					background: 'none',
+					border: 'none',
+					padding: 0,
+					cursor: 'pointer'
+				}}
+			>
+				{!menuOpen && (
+				<span
+				style={{
+					fontSize: '0.65rem',
+					fontWeight: 'bold',
+					textTransform: 'uppercase',
+					letterSpacing: '0.5px',
+					marginBottom: '1px',
+					opacity: 0.9
+				}}
+			>
+				menu
+				</span>
+			)}	
+			<span
+			style={{
+					fontSize: menuOpen ? '2.81rem' : '1.90rem',
+					lineHeight: 1,
+					marginTop: menuOpen ? '0px' : '-2px'
+				}}
+			>
+				{menuOpen ? 'X' : '☰'}
+				</span>
+		</button>
 
         <div className={`nav-links ${menuOpen ? "active" : ""}`}>
           <a className="gold-bg" href="#home">Home</a>

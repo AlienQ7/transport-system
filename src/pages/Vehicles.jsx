@@ -126,13 +126,13 @@ export default function Vehicles() {
       {/* Page Title Header Block */}
       <div className="mb-4">
         <h1 className="fw-bold m-0 vehicles-page-title">Fleet Management</h1>
-        <p className="text-white m-0 mt-1">Configure registered transport vehicles, adjust capacity thresholds, and assign active routes.</p>
+        <p className="text-white m-0 mt-1">Configure vehicles, set capacity limits, assign routes, and set fares by vehicle type.</p>
       </div>
 
       {/* Deployment & Modification Input Panel Card */}
       <div className="card vehicles-management-card p-4 mb-4 shadow-sm">
         <h5 className="fw-semibold mb-3 text-white">
-          {editingId ? "🔧 Update Fleet Specifications" : "Register New Fleet Asset"}
+          {editingId ? "🔧 Save Updates" : "Register New Vehicle"}
         </h5>
         
         <form onSubmit={editingId ? updateVehicle : createVehicle}>
@@ -142,7 +142,7 @@ export default function Vehicles() {
               <label className="form-label text-white small fw-semibold">Vehicle Code / ID plate</label>
               <input
                 className="form-control dark-form-input"
-                placeholder="e.g, NL8787"
+                placeholder="e.g,Sumo(NL8787)"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
@@ -161,7 +161,7 @@ export default function Vehicles() {
             </div>
 
             <div className="col-12 col-md-4">
-              <label className="form-label text-white small fw-semibold">Target Departure Time</label>
+              <label className="form-label text-white small fw-semibold">Departure Time</label>
               <input
                 type="time"
                 className="form-control dark-form-input"
@@ -265,13 +265,14 @@ if (cell === "R") {
 </div>
             <div className="col-12">
   <label className="form-label text-white small fw-semibold">
-    Vehicle Layout <br />
+    Vehicle Seat Layout <br />
     <span className="text-danger">*Use Portrait Orientation</span> <br />
   </label>
 
   <textarea
     className="form-control dark-form-input"
     rows="5"
+    placeholder="Example: Sumo &#10;RSD&#10;SSS&#10;SSS&#10;Sumo with 9 seat"
     value={layout}
     onChange={(e) => setLayout(e.target.value.toUpperCase())}
   />
@@ -373,7 +374,7 @@ if (cell === "R") {
               </button>
             )}
             <button type="submit" className="btn btn-gold-action px-4">
-              {editingId ? "Save Fleet Changes" : "Save"}
+              {editingId ? "Save Updates" : "Save"}
             </button>
           </div>
         </form>
@@ -382,7 +383,7 @@ if (cell === "R") {
       {/* Main Responsive Fleet Matrix Panel */}
       <div className="card vehicles-management-card shadow-sm overflow-hidden">
         <div className="px-4 py-3 border-bottom" style={{ borderColor: "var(--border-muted)" }}>
-          <h5 className="m-0 fw-semibold text-white">Active Operational Fleet Registry</h5>
+          <h5 className="m-0 fw-semibold text-white">Vehicles List</h5>
         </div>
         <div className="table-responsive">
           <table className="table table-dark custom-dark-table m-0">
