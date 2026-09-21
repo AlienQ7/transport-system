@@ -8,22 +8,12 @@ const routes = new Hono();
 
 // Create Route
 routes.post("/", authMiddleware, async (c) => {
-  const { source, destination, fare } = await c.req.json();
-
-  if (Number(fare) < 0) {
-    return c.json(
-      {
-        error: "Fare cannot be negative",
-      },
-      400
-    );
-  }
-
+  const { source, destination} = await c.req.json();
   const result = await c.env.transport_db
     .prepare(
-      "INSERT INTO routes (source, destination, fare) VALUES (?, ?, ?)"
+      "INSERT INTO routes (source, destination) VALUES (?, ?)"
     )
-    .bind(source, destination, fare)
+    .bind(source, destination)
     .run();
 
   return c.json({
@@ -65,27 +55,14 @@ routes.get("/:id", async (c) => {
 // Update Route
 routes.put("/:id", authMiddleware, async (c) => {
   const id = c.req.param("id");
-
-  const { source, destination, fare } =
-    await c.req.json();
-
-  if (Number(fare) < 0) {
-    return c.json(
-      {
-        error: "Fare cannot be negative",
-      },
-      400
-    );
-  }
-
+  const { source, destination} = await c.req.json();
   await c.env.transport_db
     .prepare(
-      "UPDATE routes SET source=?, destination=?, fare=? WHERE id=?"
+      "UPDATE routes SET source=?, destination=? WHERE id=?"
     )
     .bind(
       source,
       destination,
-      fare,
       id
     )
     .run();

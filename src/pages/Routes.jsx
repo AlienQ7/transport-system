@@ -124,7 +124,7 @@ export default function Routes() {
               </button>
             )}
             <button type="submit" className="btn btn-gold-action px-4">
-              {editingId ? "Update Route Properties" : "Deploy Route"}
+              {editingId ? "Save Updates " : "Deploy Route"}
             </button>
           </div>
         </form>
