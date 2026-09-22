@@ -10,6 +10,7 @@ export default function Login() {
   const [error, setError] = useState("");
   const [remainingAttempts, setRemainingAttempts] = useState(null);
   const [locked, setLocked] = useState(false);
+  const [loading, setLoading] = useState(false);
   const API_BASE = import.meta.env.DEV
      ? "http://localhost:8787"
      : "https://transport-system.celestialq7.workers.dev";
@@ -17,9 +18,12 @@ export default function Login() {
   const navigate = useNavigate();
 
   const login = async (e) => {
-  e.preventDefault();
+	e.preventDefault();
 
-  try {
+	setLoading(true);
+	setError("");
+
+	try {
     const res = await fetch(`${API_BASE}/api/auth/login`, {
       method: "POST",
       headers: {
@@ -61,6 +65,8 @@ export default function Login() {
   } catch (error) {
     console.error(error);
     setError("Unable to login");
+  } finally {
+    setLoading(false);
   }
 };
   return (
@@ -106,9 +112,13 @@ export default function Login() {
                   </button>
                 </div>
 
-                <button type="submit" disabled={locked}>
-                 {locked ? "Account Locked" : "Login"}
-                </button>
+                <button type="submit" disabled={locked || loading}>
+				{locked
+				? "Account Locked"
+				: loading
+				? "Logging in..."
+				: "Login"}
+				</button>
                 {error && (
                  <div className="mt-3 text-danger">
                 {error}

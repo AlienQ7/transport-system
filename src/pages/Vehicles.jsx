@@ -179,7 +179,7 @@ export default function Vehicles() {
                 onChange={(e) => setRouteId(e.target.value)}
                 required
               >
-                <option value="">Select Operational Route...</option>
+                <option value="">Select Route...</option>
                 {routes.map((route) => (
                   <option key={route.id} value={route.id}>
                     {route.source} &rarr; {route.destination}
@@ -225,16 +225,14 @@ export default function Vehicles() {
           let bg = "transparent";
           let text = "";
           if (cell === "S") {
-  bg = "#198754";
-  text = seatCounter++;
-}
+			bg = "#198754";
+			text = seatCounter++;
+		}
 
-if (cell === "R") {
-  bg = "#6c757d";
-  text = seatCounter++;
-}
-      
-
+		if (cell === "R") {
+			bg = "#6c757d";
+			text = seatCounter++;
+		}
           if (cell === "D") {
             bg = "#495057";
             text = "D";
@@ -393,10 +391,10 @@ if (cell === "R") {
                 <th>Vehicle Plate</th>
                 <th>Capacity Limit</th>
                 <th>Travel Date</th>
-                <th>Fare</th>
-                <th>Departure</th>
-                <th>Origin Source</th>
+                <th>Time</th>
+                <th>Origin</th>
                 <th>Destination</th>
+                <th>Fare</th>
                 <th className="text-end" style={{ width: "180px" }}>Actions</th>
               </tr>
             </thead>

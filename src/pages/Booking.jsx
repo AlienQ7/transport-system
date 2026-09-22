@@ -188,7 +188,7 @@ const numberedLayout =
                   <input
 						type="text" 
 						className="form-control dark-form-input"
-						placeholder="Enter a valid phone number (numbers, spaces, or country code allowed)"
+						placeholder="Enter a valid phone number"
 						value={phone}
 						onChange={(e) => setPhone(e.target.value)}
 						maxLength={14} 

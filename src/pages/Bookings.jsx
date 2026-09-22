@@ -161,7 +161,7 @@ export default function Bookings() {
             <h1>Bookings</h1>
 
             <form onSubmit={editingId ? updateBooking : createBooking}>
-              <input
+              <input 
                 placeholder="Customer Name"
                 value={customerName}
                 onChange={(e) => setCustomerName(e.target.value)}
