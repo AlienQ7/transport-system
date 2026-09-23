@@ -51,8 +51,6 @@ async function loadTicket() {
         );
       }
     }
-
-    // Fetch booking again because verification may have changed
     // payment_status from pending -> paid.
     const finalResponse = await apiFetch(
       `/api/bookings/${id}`
@@ -77,38 +75,69 @@ async function loadTicket() {
   }
 }
   async function downloadTicket() {
-    const element = document.getElementById("ticket");
+  const element = document.getElementById("ticket");
 
-    const canvas = await html2canvas(element, { backgroundColor: "#1a1d29" });
+  try {
+    const canvas = await html2canvas(element, {
+      backgroundColor: "#12141c",
+      scale: 2,
+      useCORS: true,
+      allowTaint: false,
+      logging: false,
+      windowWidth: element.scrollWidth,
+      windowHeight: element.scrollHeight,
+    });
 
     const imgData = canvas.toDataURL("image/png");
-
-    const pdf = new jsPDF();
+    const pdfWidth = 190;
+    const pdfHeight =
+      (canvas.height * pdfWidth) / canvas.width;
+    const pdf = new jsPDF(
+      "p",
+      "mm",
+      [pdfWidth + 20, pdfHeight + 20]
+    );
 
     pdf.addImage(
       imgData,
       "PNG",
       10,
       10,
-      190,
-      0
+      pdfWidth,
+      pdfHeight
     );
-    pdf.save(`ticket-${booking.ticket_code}.pdf`);
-  }
-  async function downloadTicketImage() {
-    const ticket = document.getElementById("ticket");
 
-    const canvas = await html2canvas(ticket, { backgroundColor: "#1a1d29" });
+    pdf.save(`ticket-${booking.ticket_code}.pdf`);
+  } catch (error) {
+    console.error("Failed to generate PDF:", error);
+    alert("Unable to download ticket PDF.");
+  }
+}
+  async function downloadTicketImage() {
+  const ticket = document.getElementById("ticket");
+
+  try {
+    const canvas = await html2canvas(ticket, {
+      backgroundColor: "#12141c",
+      scale: 2,
+      useCORS: true,
+      allowTaint: false,
+      logging: false,
+      windowWidth: ticket.scrollWidth,
+      windowHeight: ticket.scrollHeight,
+    });
 
     const link = document.createElement("a");
 
     link.download = `${booking.ticket_code}.png`;
-
     link.href = canvas.toDataURL("image/png");
 
     link.click();
+  } catch (error) {
+    console.error("Failed to generate ticket image:", error);
+    alert("Unable to download ticket image.");
   }
-
+}
   if (loading) return (
     <div className="w-100 d-flex justify-content-center align-items-center text-white" style={{ minHeight: "100vh", backgroundColor: "var(--bg-app-dark)" }}>
       <div className="spinner-border text-warning" role="status"></div>

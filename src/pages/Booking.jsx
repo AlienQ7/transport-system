@@ -20,9 +20,8 @@ export default function Booking() {
   const [selectedSeat, setSelectedSeat] = useState(null);
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [occupiedSeats, setOccupiedSeats] = useState([]);
-  const selectedVehicle =
-      vehicles.find(v => String(v.id) === String(vehicleId));
-
+  const [loading, setLoading] = useState(false);
+  const selectedVehicle = vehicles.find(v => String(v.id) === String(vehicleId));
   const vehicleLayout =
      selectedVehicle?.layout || "";
      useEffect(() => {
@@ -110,16 +109,46 @@ const numberedLayout =
   }
 
   async function submitBooking(e) {
-    e.preventDefault();
+  e.preventDefault();
 
-    if (!customerName.trim()) { alert("Enter customer name"); return; }
-    if (!routeId) { alert("Select route"); return; }
-    if (!vehicleId) { alert("Select vehicle"); return; }
-    if (Number(seatNo) <= 0) { alert("Seat number must be greater than 0"); return; }
-    if (!travelDate) { alert("Select travel date"); return; }
-    if (!departureTime) { alert("Select departure time"); return; }
-    if (!phone.trim()) { alert("Enter phone number"); return; }
+  if (!customerName.trim()) {
+    alert("Enter customer name");
+    return;
+  }
 
+  if (!routeId) {
+    alert("Select route");
+    return;
+  }
+
+  if (!vehicleId) {
+    alert("Select vehicle");
+    return;
+  }
+
+  if (Number(seatNo) <= 0) {
+    alert("Seat number must be greater than 0");
+    return;
+  }
+
+  if (!travelDate) {
+    alert("Select travel date");
+    return;
+  }
+
+  if (!departureTime) {
+    alert("Select departure time");
+    return;
+  }
+
+  if (!phone.trim()) {
+    alert("Enter phone number");
+    return;
+  }
+
+  setLoading(true);
+
+  try {
     const res = await apiFetch("/api/bookings", {
       method: "POST",
       body: JSON.stringify({
@@ -139,9 +168,15 @@ const numberedLayout =
       alert(data.error);
       return;
     }
-    navigate(`/payment/${data.id}`);
-  }
 
+    navigate(`/payment/${data.id}`);
+  } catch (error) {
+    console.error(error);
+    alert("Unable to create booking. Please try again.");
+  } finally {
+    setLoading(false);
+  }
+}
   return (
     <div className="w-100 px-0 text-white" style={{ minHeight: "100vh", backgroundColor: "var(--bg-app-dark)" }}>
       
@@ -199,79 +234,76 @@ const numberedLayout =
 				</div>
 
                 <div className="col-12 col-md-6">
-  <label className="form-label text-white small fw-semibold">
-    Route
-  </label>
+					<label className="form-label text-white small fw-semibold">
+					Route
+					</label>
 
-  <select
-    className="form-select dark-form-select"
-    value={routeId}
-    onChange={(e) => {
-      const id = e.target.value;
-      setRouteId(id);
+					<select
+					className="form-select dark-form-select"
+					value={routeId}
+					onChange={(e) => {
+					const id = e.target.value;
+					setRouteId(id);
+					// Reset vehicle and fare when route changes
+					setVehicleId("");
+					setSelectedFare(0);
+					setTravelDate("");
+					setDepartureTime("");
+				}}
+				required
+				>
+				<option value="">Select Target Route...</option>
+					{routes.map((route) => (
+					<option key={route.id} value={route.id}>
+					{route.source} &rarr; {route.destination}
+				</option>
+				))}
+			</select>
+			</div>
 
-      // Reset vehicle and fare when route changes
-      setVehicleId("");
-      setSelectedFare(0);
-      setTravelDate("");
-      setDepartureTime("");
-    }}
-    required
-  >
-    <option value="">Select Target Route...</option>
+            <div className="col-12 col-md-6">
+					<label className="form-label text-white small fw-semibold">
+					Vehicle
+					</label>
 
-    {routes.map((route) => (
-      <option key={route.id} value={route.id}>
-        {route.source} &rarr; {route.destination}
-      </option>
-    ))}
-  </select>
-</div>
+					<select
+					className="form-select dark-form-select"
+					value={vehicleId}
+					onChange={(e) => {
+				const id = e.target.value;
+					setVehicleId(id);
 
-                <div className="col-12 col-md-6">
-  <label className="form-label text-white small fw-semibold">
-    Vehicle
-  </label>
+				const vehicle = vehicles.find(
+					(v) => String(v.id) === String(id)
+				);
 
-  <select
-    className="form-select dark-form-select"
-    value={vehicleId}
-    onChange={(e) => {
-      const id = e.target.value;
-      setVehicleId(id);
+					setTravelDate(vehicle?.travel_date || "");
+					setDepartureTime(vehicle?.departure_time || "");
+					setSelectedFare(vehicle?.fare || 0);
+				}}
+					required
+				>
+					<option value="">Select Assigned Vehicle...</option>
 
-      const vehicle = vehicles.find(
-        (v) => String(v.id) === String(id)
-      );
-
-      setTravelDate(vehicle?.travel_date || "");
-      setDepartureTime(vehicle?.departure_time || "");
-      setSelectedFare(vehicle?.fare || 0);
-    }}
-    required
-  >
-    <option value="">Select Assigned Vehicle...</option>
-
-    {vehicles
-      .filter((vehicle) => String(vehicle.route_id) === String(routeId))
-      .map((vehicle) => (
-        <option key={vehicle.id} value={vehicle.id}>
-          {vehicle.name} — ₹{Number(vehicle.fare || 0).toLocaleString("en-IN")}
-        </option>
-      ))}
-  </select>
-</div>
+					{vehicles
+					.filter((vehicle) => String(vehicle.route_id) === String(routeId))
+					.map((vehicle) => (
+						<option key={vehicle.id} value={vehicle.id}>
+							{vehicle.name} — ₹{Number(vehicle.fare || 0).toLocaleString("en-IN")}
+						</option>
+						))}
+				</select>
+			</div>
                {/*render layout*/} 
              <div className="d-flex flex-column gap-2">
-  
-{numberedLayout.map((row, rowIndex) => (
-  <div
-    key={rowIndex}
-    className="d-flex gap-1 justify-content-center"
-  >
-    {row.map((cell, cellIndex) => {
+				{numberedLayout.map((row, rowIndex) => (
+			<div
+				key={rowIndex}
+				className="d-flex gap-1 justify-content-center"
+				>
+				{row.map((cell, cellIndex) => {
 
-      if (cell.type === "N") {
+				if (cell.type === "N") {
   return (
     <div
       key={`n-${rowIndex}-${cellIndex}`}
@@ -403,9 +435,13 @@ const isSelected =
 
           {/* Submission Row Area */}
           <div className="d-flex justify-content-center justify-content-lg-end mt-4 pt-3 border-top" style={{ borderColor: "var(--border-muted)" }}>
-            <button type="submit" className="btn btn-confrim px-5 fw-bold w-100 w-lg-auto">
-              Confirm Ticket &rarr;
-            </button>
+            <button
+				type="submit"
+				className="btn btn-confrim px-5 fw-bold w-100 w-lg-auto"
+				disabled={loading}
+				>
+				{loading ? "Confirming Ticket..." : "Confirm Ticket →"}
+			</button>
           </div>
         </form>
       </div>
