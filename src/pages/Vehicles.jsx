@@ -1,5 +1,5 @@
 // DEPLOY TEST JUNE 2026
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { apiFetch } from "../services/api";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../styles/vehicles.css";
@@ -14,6 +14,24 @@ export default function Vehicles() {
   const [editingId, setEditingId] = useState(null);
   const [layout, setLayout] = useState(``);
   const [fare, setFare] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
+  const formRef = useRef(null);
+  const filteredVehicles = vehicles.filter((vehicle) => {
+  const query = searchTerm.trim().toLowerCase();
+  if (!query) return true;
+  return [
+    vehicle.id,
+    vehicle.name,
+    vehicle.capacity,
+    vehicle.travel_date,
+    vehicle.departure_time,
+    vehicle.source,
+    vehicle.destination,
+    vehicle.fare,
+  ].some((value) =>
+    String(value ?? "").toLowerCase().includes(query)
+  );
+});
   const capacity =
   (layout.match(/[SR]/g) || []).length;
   
@@ -108,6 +126,10 @@ export default function Vehicles() {
     setTravelDate(vehicle.travel_date || "");
     setDepartureTime(vehicle.departure_time || "");
     setFare(vehicle.fare ?? "");
+    formRef.current?.scrollIntoView({
+     behavior: "smooth",
+     block: "start",
+   });
   }
   
   function resetForm() {
@@ -121,16 +143,14 @@ export default function Vehicles() {
   }
 
   return (
-    <div className="container-fluid px-0 text-white">
-      
+    <div className="container-fluid px-0 text-white"> 
       {/* Page Title Header Block */}
-      <div className="mb-4">
+      <div className="mb-4" >
         <h1 className="fw-bold m-0 vehicles-page-title">Fleet Management</h1>
         <p className="text-white m-0 mt-1">Configure vehicles, set capacity limits, assign routes, and set fares by vehicle type.</p>
       </div>
-
       {/* Deployment & Modification Input Panel Card */}
-      <div className="card vehicles-management-card p-4 mb-4 shadow-sm">
+      <div className="card vehicles-management-card p-4 mb-4 shadow-sm"  ref={formRef}>
         <h5 className="fw-semibold mb-3 text-white">
           {editingId ? "🔧 Save Updates" : "Register New Vehicle"}
         </h5>
@@ -148,7 +168,6 @@ export default function Vehicles() {
                 required
               />
             </div>
-
             <div className="col-12 col-md-4">
               <label className="form-label text-white small fw-semibold">Scheduled Date</label>
               <input
@@ -159,7 +178,6 @@ export default function Vehicles() {
                 required
               />
             </div>
-
             <div className="col-12 col-md-4">
               <label className="form-label text-white small fw-semibold">Departure Time</label>
               <input
@@ -170,7 +188,6 @@ export default function Vehicles() {
                 required
               />
             </div>
-
             <div className="col-12 col-md-6">
               <label className="form-label text-white small fw-semibold">Assigned Route </label>
               <select
@@ -275,18 +292,13 @@ export default function Vehicles() {
     onChange={(e) => setLayout(e.target.value.toUpperCase())}
   />
 </div>
-
- 
 {/* Vehicle Layout Controls */}
 <div className="layout-controls">
-
   <div className="layout-controls-title">
     <span>Layout Tools</span>
     <small>Click an element to add it</small>
   </div>
-
   <div className="layout-tools-grid">
-
     <button
       type="button"
       className="layout-tool-card seat-tool"
@@ -296,7 +308,6 @@ export default function Vehicles() {
       <div className="tool-symbol">S</div>
       <div className="tool-name">Seat</div>
     </button>
-
     <button
       type="button"
       className="layout-tool-card reserved-tool"
@@ -306,7 +317,6 @@ export default function Vehicles() {
       <div className="tool-symbol">R</div>
       <div className="tool-name">Reserved</div>
     </button>
-
     <button
       type="button"
       className="layout-tool-card driver-tool"
@@ -316,7 +326,6 @@ export default function Vehicles() {
       <div className="tool-symbol">D</div>
       <div className="tool-name">Driver</div>
     </button>
-
     <button
       type="button"
       className="layout-tool-card empty-tool"
@@ -326,7 +335,6 @@ export default function Vehicles() {
       <div className="tool-symbol">E</div>
       <div className="tool-name">Space</div>
     </button>
-
     <button
       type="button"
       className="layout-tool-card row-tool"
@@ -336,7 +344,6 @@ export default function Vehicles() {
       <div className="tool-symbol">↵</div>
       <div className="tool-name">New Row</div>
     </button>
-
     <button
       type="button"
       className="layout-tool-card delete-tool"
@@ -347,18 +354,14 @@ export default function Vehicles() {
       <div className="tool-symbol">⌫</div>
       <div className="tool-name">Delete</div>
     </button>
-
   </div>
-
 </div>
-
 <div className="col-12">
   <div className="alert alert-info py-2 mb-0">
     Total Seats Available: <strong>{capacity}</strong>
   </div>
 </div>
 </div>
-
           {/* Form Action Triggers */}
           <div className="d-flex justify-content-end gap-2 mt-4">
             {editingId && (
@@ -376,77 +379,122 @@ export default function Vehicles() {
             </button>
           </div>
         </form>
+      </div>    
+{/* Responsive Vehicle Cards Panel */}
+<div className="card vehicles-management-card shadow-sm overflow-hidden">
+  <div className="px-4 py-3 border-bottom"
+       style={{ borderColor: "var(--border-muted)" }}>
+    <h5 className="m-0 fw-semibold text-white">Vehicles List</h5>
+    <small className="text-white-50">
+      {searchTerm.trim()
+        ? `${filteredVehicles.length} of ${vehicles.length} vehicle(s)`
+        : `${vehicles.length} vehicle(s) registered`}
+    </small>
+  </div>
+  {/* Vehicle Search */}
+  <div className="vehicle-search">
+    <span className="vehicle-search-icon" aria-hidden="true">
+      <svg
+        viewBox="0 0 24 24"
+        width="19"
+        height="19"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      >
+        <circle cx="11" cy="11" r="7" />
+        <path d="m16 16 4 4" />
+      </svg>
+    </span>
+    <input
+      type="search"
+      placeholder="Search plate, route, date, capacity..."
+      aria-label="Search vehicles"
+      value={searchTerm}
+      onChange={(e) => setSearchTerm(e.target.value)}
+    />
+    {searchTerm && (
+      <button
+        type="button"
+        className="vehicle-search-clear"
+        onClick={() => setSearchTerm("")}
+        aria-label="Clear search"
+      >
+        Clear
+      </button>
+    )}
+  </div>
+  {/* Vehicle Cards */}
+  <div className="vehicle-cards-list">
+    {filteredVehicles.length === 0 ? (
+      <div className="vehicle-empty">
+        {vehicles.length === 0
+          ? "No registered vehicles found."
+          : "No vehicles match your search."}
       </div>
+    ) : (
+      filteredVehicles.map((vehicle) => (
+        <article className="vehicle-item-card" key={vehicle.id}>
+          <div className="vehicle-item-header">
+            <div>
+              <span className="vehicle-id">Vehicle #{vehicle.id}</span>
+              <h3>{vehicle.name || "Unnamed vehicle"}</h3>
+            </div>
+            <span className="vehicle-capacity">
+              {vehicle.capacity ?? "—"} Seats
+            </span>
+          </div>
+          <div className="vehicle-route">
+            <div className="vehicle-detail">
+              <span className="vehicle-detail-label">ORIGIN</span>
+              <strong>{vehicle.source || "—"}</strong>
+            </div>
+            <span className="vehicle-route-arrow" aria-hidden="true">
+              →
+            </span>
+            <div className="vehicle-detail">
+              <span className="vehicle-detail-label">DESTINATION</span>
+              <strong>{vehicle.destination || "—"}</strong>
+            </div>
+          </div>
+          <div className="vehicle-details-grid">
+            <div className="vehicle-detail">
+              <span className="vehicle-detail-label">TRAVEL DATE</span>
+              <strong>{vehicle.travel_date || "—"}</strong>
+            </div>
+            <div className="vehicle-detail">
+              <span className="vehicle-detail-label">DEPARTURE</span>
+              <strong>{vehicle.departure_time || "—"}</strong>
+            </div>
+            <div className="vehicle-detail">
+              <span className="vehicle-detail-label">FARE</span>
+              <strong>₹{Number(vehicle.fare || 0).toFixed(2)}</strong>
+            </div>
+          </div>
+          <div className="vehicle-actions">
+            <button
+              type="button"
+              className="vehicle-btn vehicle-btn-edit"
+              onClick={() => editVehicle(vehicle)}
+            >
+              Edit
+            </button>
 
-      {/* Main Responsive Fleet Matrix Panel */}
-      <div className="card vehicles-management-card shadow-sm overflow-hidden">
-        <div className="px-4 py-3 border-bottom" style={{ borderColor: "var(--border-muted)" }}>
-          <h5 className="m-0 fw-semibold text-white">Vehicles List</h5>
-        </div>
-        <div className="table-responsive">
-          <table className="table table-dark custom-dark-table m-0">
-            <thead>
-              <tr>
-                <th style={{ width: "70px" }}>ID</th>
-                <th>Vehicle Plate</th>
-                <th>Capacity Limit</th>
-                <th>Travel Date</th>
-                <th>Time</th>
-                <th>Origin</th>
-                <th>Destination</th>
-                <th>Fare</th>
-                <th className="text-end" style={{ width: "180px" }}>Actions</th>
-              </tr>
-            </thead>
+            <button
+              type="button"
+              className="vehicle-btn vehicle-btn-delete"
+              onClick={() => deleteVehicle(vehicle.id)}
+            >
+              Delete
+            </button>
+          </div>
+        </article>
+      ))
+    )}
+  </div>
+</div>
+</div>
 
-            <tbody>
-              {vehicles.length === 0 ? (
-                <tr>
-                  <td colSpan="8" className="text-center py-4 text-white small">
-                    No registered operational vehicles tracked in registry.
-                  </td>
-                </tr>
-              ) : (
-                vehicles.map((vehicle) => (
-                  <tr key={vehicle.id}>
-                    <td className="fw-semibold text-white">#{vehicle.id}</td>
-                    <td className="text-white fw-medium">{vehicle.name}</td>
-                    <td>
-                      <span className="badge bg-dark border text-light px-2.5 py-1.5" style={{ borderColor: "var(--border-muted)" }}>
-                        {vehicle.capacity} Seats
-                      </span>
-                    </td>
-                    <td>{vehicle.travel_date}</td>
-                    <td>{vehicle.departure_time}</td>
-                    <td>{vehicle.source}</td>
-                    <td>{vehicle.destination}</td>
-                    <td>₹{Number(vehicle.fare || 0).toFixed(2)}</td>
-                    <td>
-                      <div className="d-flex justify-content-end gap-2">
-                        <button
-                          className="btn btn-sm btn-outline-warning px-3"
-                          style={{ borderRadius: "6px", fontWeight: "500" }}
-                          onClick={() => editVehicle(vehicle)}
-                        >
-                          Edit
-                        </button>
-                        <button
-                          className="btn btn-sm btn-outline-danger px-3"
-                          style={{ borderRadius: "6px", fontWeight: "500" }}
-                          onClick={() => deleteVehicle(vehicle.id)}
-                        >
-                          Delete
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-    </div>
   );
 }

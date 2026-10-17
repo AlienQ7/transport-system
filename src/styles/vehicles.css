@@ -211,3 +211,161 @@
   transform: none;
   background: rgba(255, 255, 255, 0.05);
 }
+
+
+/* Vehicle Search */
+.vehicle-search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 16px 20px;
+  padding: 0 12px;
+  background: var(--bg-app-dark);
+  border: 1px solid var(--border-muted);
+  border-radius: 8px;
+}
+
+.vehicle-search-icon {
+  display: flex;
+  color: var(--text-muted);
+}
+
+.vehicles-management-card .vehicle-search input[type="search"] {
+  flex: 1;
+  min-width: 0;
+  padding: 11px 0;
+  color: white;
+  background: transparent;
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
+
+.vehicle-search-clear {
+  padding: 5px 9px;
+  color: white;
+  background: #374151;
+  border: none;
+  border-radius: 5px;
+}
+
+/* Vehicle Cards */
+.vehicle-cards-list {
+  display: grid;
+  gap: 14px;
+  padding: 0 20px 20px;
+}
+
+.vehicle-item-card {
+  min-width: 0;
+  padding: 16px;
+  background: var(--bg-app-dark);
+  border: 1px solid var(--border-muted);
+  border-radius: 10px;
+}
+
+.vehicle-item-header,
+.vehicle-route,
+.vehicle-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.vehicle-item-header h3 {
+  margin: 4px 0;
+  color: white;
+  font-size: 17px;
+  overflow-wrap: anywhere;
+}
+
+.vehicle-id,
+.vehicle-detail-label {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--text-muted);
+  font-size: 11px;
+}
+
+.vehicle-capacity {
+  color: var(--accent-gold);
+  white-space: nowrap;
+}
+
+.vehicle-route {
+  justify-content: flex-start;
+  padding: 14px 0;
+  margin-top: 10px;
+  border-top: 1px solid var(--border-muted);
+  border-bottom: 1px solid var(--border-muted);
+}
+
+.vehicle-detail {
+  min-width: 0;
+}
+
+.vehicle-detail strong {
+  color: white;
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+
+.vehicle-route-arrow {
+  color: var(--accent-gold);
+}
+
+.vehicle-details-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  padding: 15px 0;
+}
+
+.vehicle-actions {
+  justify-content: flex-end;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-muted);
+}
+
+.vehicle-btn {
+  padding: 7px 15px;
+  background: transparent;
+  border: 1px solid;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.vehicle-btn-edit {
+  color: var(--accent-gold);
+  border-color: var(--accent-gold);
+}
+
+.vehicle-btn-delete {
+  color: #ef4444;
+  border-color: #ef4444;
+}
+
+.vehicle-empty {
+  padding: 25px;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+@media (max-width: 576px) {
+  .vehicle-cards-list {
+    padding: 0 12px 12px;
+  }
+
+  .vehicle-search {
+    margin: 12px;
+  }
+
+  .vehicle-details-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .vehicle-item-card {
+    padding: 12px;
+  }
+}

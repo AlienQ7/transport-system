@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { apiFetch } from "../services/api";
 import "bootstrap/dist/css/bootstrap.min.css"; 
 import "../styles/bookings.css"; 
@@ -15,13 +15,32 @@ export default function Bookings() {
   const [editingId, setEditingId] = useState(null);
   const [departureTime, setDepartureTime] = useState("");
   const [phone, setPhone] = useState("");
-
+  const [searchTerm, setSearchTerm] = useState("");
+  const formRef = useRef(null);
   useEffect(() => {
     loadBookings();
     loadRoutes();
     loadVehicles();
   }, []);
+  const filteredBookings = bookings.filter((booking) => {
+  const query = searchTerm.trim().toLowerCase();
 
+  if (!query) return true;
+
+  return [
+      booking.id,
+      booking.customer_name,
+      booking.phone_number,
+      booking.source,
+      booking.destination,
+      booking.vehicle_name,
+      booking.seat_no,
+      booking.status,
+      booking.payment_status,
+    ].some((value) =>
+      String(value ?? "").toLowerCase().includes(query)
+    );
+  });
   async function loadBookings() {
     const res = await apiFetch("/api/bookings");
     const data = await res.json();
@@ -118,17 +137,13 @@ export default function Bookings() {
   const res = await apiFetch(`/api/bookings/${id}/approve`, {
     method: "PUT",
   });
-
   const data = await res.json();
-
   if (!res.ok) {
     alert(data.error || "Failed to approve payment");
     return;
   }
-
   await loadBookings();
 }
-
   function editBooking(booking) {
     setEditingId(booking.id);
     setCustomerName(booking.customer_name);
@@ -138,6 +153,11 @@ export default function Bookings() {
     setTravelDate(booking.travel_date || "");
     setDepartureTime(booking.departure_time || "");
     setPhone(booking.phone_number || "");
+    formRef.current?.scrollIntoView({
+    behavior: "smooth",
+    block: "start",
+  });
+    
   }
 
   function resetForm() {
@@ -154,12 +174,10 @@ export default function Bookings() {
   return (
     <div className="container-fluid px-0">
       <div className="row g-4">
-        
         {/* Form Content Side Panel Card */}
-        <div className="col-12 col-xl-4">
+        <div className="col-12 col-xl-4" ref={formRef}>
           <div className="bookings-card">
             <h1>Bookings</h1>
-
             <form onSubmit={editingId ? updateBooking : createBooking}>
               <input 
                 placeholder="Customer Name"
@@ -221,92 +239,186 @@ export default function Bookings() {
             </form>
           </div>
         </div>
-
-        {/* Table Content Window Data Layout */}
-        <div className="col-12 col-xl-8">
-          <div className="bookings-card data-card">
-            <div className="table-responsive-container">
-              <table>
-                <thead>
-                  <tr>
-                    <th>ID</th>
-                    <th>Customer</th>
-                    <th>Contact</th>
-                    <th>Seat</th>
-                    <th>Travel Date</th>
-                    <th>Departure Time</th>
-                    <th>Vehicle</th>
-                    <th>Route</th>
-                    <th>Status</th>
-                    <th>Payment</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-
-                <tbody>
-                  {bookings.map((booking) => (
-                    <tr key={booking.id}>
-                      <td>{booking.id}</td>
-                      <td>{booking.customer_name}</td>
-                      <td>{booking.phone_number}</td>
-                      <td>{booking.seat_no}</td>
-                      <td>{booking.travel_date}</td>
-                      <td>{booking.departure_time}</td>
-                      <td>{booking.vehicle_name}</td>
-                      <td>
-                        {booking.source} {" → "} {booking.destination}
-                      </td>
-                      <td>
-                        <span className={`badge-status ${booking.status}`}>
-                          {booking.status}
-                        </span>
-                      </td>
-                      <td>
-						<span className={`badge-payment ${booking.payment_status}`}>
-							{booking.payment_status}
-						</span>
-					</td>
-
-					<td>
-  <button onClick={() => editBooking(booking)}>
-    Edit
-  </button>
-
-  <button onClick={() => deleteBooking(booking.id)}>
-    Delete
-  </button>
-
-  {/* Manual/offline payment approval */}
-  {booking.payment_status !== "paid" && (
-    <button
-      onClick={() => approvePayment(booking.id)}
-    >
-      Approve
-    </button>
-  )}
-
-  {/* Paid bookings can view their ticket */}
-  {booking.payment_status === "paid" && (
-    <button
-      onClick={() =>
-        window.open(`/ticket/${booking.id}`, "_blank")
-      }
-    >
-      View Ticket
-    </button>
-  )}
-</td>
-                      <td>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-
+        
+{/* Responsive Booking Cards */}
+<div className="col-12 col-xl-8">
+  <div className="bookings-card data-card">
+    <div className="booking-list-header">
+      <div>
+        <h2>All Bookings</h2>
+        <p>
+          {searchTerm.trim()
+            ? `${filteredBookings.length} of ${bookings.length} booking(s)`
+            : `${bookings.length} booking(s) found`}
+        </p>
       </div>
     </div>
+
+    {/* Passenger Search */}
+    <div className="booking-search">
+      <span className="booking-search-icon" aria-hidden="true">
+        <svg
+          viewBox="0 0 24 24"
+          width="19"
+          height="19"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+        >
+          <circle cx="11" cy="11" r="7" />
+          <path d="m16 16 4 4" />
+        </svg>
+      </span>
+
+      <input
+        type="search"
+        placeholder="Search passenger, phone, booking ID, route..."
+        aria-label="Search bookings"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+      />
+
+      {searchTerm && (
+        <button
+          type="button"
+          className="booking-search-clear"
+          onClick={() => setSearchTerm("")}
+          aria-label="Clear search"
+        >
+          Clear
+        </button>
+      )}
+    </div>
+
+    <div className="booking-cards-list">
+      {filteredBookings.length === 0 ? (
+        <div className="booking-empty">
+          {bookings.length === 0
+            ? "No bookings found."
+            : "No passengers match your search."}
+        </div>
+      ) : (
+        filteredBookings.map((booking) => (
+          <article className="booking-item-card" key={booking.id}>
+            {/* Passenger and status */}
+            <div className="booking-item-header">
+              <div className="booking-passenger">
+                <span className="booking-id">
+                  Booking #{booking.id}
+                </span>
+
+                <h3>{booking.customer_name}</h3>
+
+                <a
+                  className="booking-phone"
+                  href={`tel:${booking.phone_number || ""}`}
+                >
+                  {booking.phone_number || "No phone number"}
+                </a>
+              </div>
+
+              <div className="booking-badges">
+                <span
+                  className={`badge-status ${(booking.status || "").toLowerCase()}`}
+                >
+                  {booking.status || "Unknown"}
+                </span>
+
+                <span
+                  className={`badge-payment ${(booking.payment_status || "").toLowerCase()}`}
+                >
+                  {booking.payment_status || "Unpaid"}
+                </span>
+              </div>
+            </div>
+
+            {/* Route and seat */}
+            <div className="booking-route-row">
+              <div className="booking-route-box">
+                <span className="booking-detail-label">ROUTE</span>
+
+                <div className="booking-route">
+                  <span>{booking.source || "Unknown source"}</span>
+                  <span className="booking-route-arrow">→</span>
+                  <span>
+                    {booking.destination || "Unknown destination"}
+                  </span>
+                </div>
+              </div>
+
+              <div className="booking-seat-box">
+                <span className="booking-detail-label">SEAT</span>
+                <strong>{booking.seat_no ?? "—"}</strong>
+              </div>
+            </div>
+
+            {/* Compact travel information */}
+            <div className="booking-details-grid">
+              <div className="booking-detail">
+                <span className="booking-detail-label">VEHICLE</span>
+                <strong>{booking.vehicle_name || "—"}</strong>
+              </div>
+
+              <div className="booking-detail">
+                <span className="booking-detail-label">TRAVEL DATE</span>
+                <strong>{booking.travel_date || "—"}</strong>
+              </div>
+
+              <div className="booking-detail">
+                <span className="booking-detail-label">DEPARTURE</span>
+                <strong>{booking.departure_time || "—"}</strong>
+              </div>
+            </div>
+
+            {/* Actions */}
+            <div className="booking-actions">
+              <button
+                type="button"
+                className="booking-btn booking-btn-edit"
+                onClick={() => editBooking(booking)}
+              >
+                Edit
+              </button>
+
+              <button
+                type="button"
+                className="booking-btn booking-btn-delete"
+                onClick={() => deleteBooking(booking.id)}
+              >
+                Delete
+              </button>
+
+              {booking.payment_status?.toLowerCase() !== "paid" && (
+                <button
+                  type="button"
+                  className="booking-btn booking-btn-approve"
+                  onClick={() => approvePayment(booking.id)}
+                >
+                  Approve Payment
+                </button>
+              )}
+
+              {booking.payment_status?.toLowerCase() === "paid" && (
+                <button
+                  type="button"
+                  className="booking-btn booking-btn-ticket"
+                  onClick={() =>
+                    window.open(`/ticket/${booking.id}`, "_blank")
+                  }
+                >
+                  View Ticket
+                </button>
+              )}
+            </div>
+          </article>
+        ))
+      
+      )}
+    </div>
+  </div>
+</div>
+</div> 
+</div> 
   );
 }
