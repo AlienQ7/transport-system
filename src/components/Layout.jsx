@@ -1,4 +1,4 @@
-//trasnport-system/src/components/Layout.jsx
+//trasnport-system/src/components/Layout.jsx    
 import { useState } from "react";
 import { Link, Outlet, useNavigate, useLocation } from "react-router-dom";
 import "../styles/bookings.css"; 
@@ -7,7 +7,6 @@ export default function Layout() {
   const navigate = useNavigate();
   const location = useLocation();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-
   const role = localStorage.getItem("role");
 
   function logout() {
@@ -163,7 +162,7 @@ export default function Layout() {
       className={`nav-link text-white opacity-75 py-2 px-3 ${isActive("/sumo-counter")}`}
       onClick={() => setIsSidebarOpen(false)}
     >
-      Sumo Counter
+      Marketplace
     </Link>
   </>
 )}
@@ -179,9 +178,7 @@ export default function Layout() {
           )}
 
         </nav>
-
         <hr style={{ borderColor: "var(--border-muted)" }} />
-
         {/* LOGOUT */}
         <button
           onClick={logout}
