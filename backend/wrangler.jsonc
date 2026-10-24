@@ -1,27 +1,32 @@
+
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "backend",
   "main": "src/index.ts",
   "compatibility_date": "2026-06-02",
-
   "observability": {
     "enabled": true
   },
-
   "upload_source_maps": true,
-
   "compatibility_flags": ["nodejs_compat"],
-
+  "vars": {
+    "R2_URL": "https://pub-13525ade4a1a45c58353c763b754916e.r2.dev"
+  },
   "d1_databases": [
     {
       "binding": "transport_db",
       "database_name": "transport_db",
       "database_id": "48fc4128-0947-4cc7-91df-1e9ea0697aa6"
     }
-  ]
-
-  // Optional environment variables (DO NOT put JWT_SECRET here if using secrets)
-  // "vars": {
-  //   "NODE_ENV": "production"
-  // }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "MEDIA_BUCKET",
+      "bucket_name": "transport",
+      "remote": true
+    }
+  ],
+  "triggers": {
+    "crons": ["0 * * * *"]
+  }
 }

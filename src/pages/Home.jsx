@@ -1,11 +1,43 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "../styles/Home.css";
+
+const MEDIA_API = import.meta.env.VITE_API_URL ||
+  "https://transport-system.celestialq7.workers.dev";
 
 export default function Home() {
   const token = localStorage.getItem("token");
   const role = localStorage.getItem("role");
   const [menuOpen, setMenuOpen] = useState(false);
+  const [lostFoundItems, setLostFoundItems] = useState([]);
+  const [sumoItems, setSumoItems] = useState([]);
+  
+  useEffect(() => {
+    let cancelled = false;
+
+  async function loadPublicListings() {
+    const [lostResult, sumoResult] = await Promise.allSettled([
+      fetch(`${MEDIA_API}/api/media/lost-found`),
+      fetch(`${MEDIA_API}/api/media/sumo-counter`),
+    ]);
+
+    if (cancelled) return;
+
+    if (lostResult.status === "fulfilled" && lostResult.value.ok) {
+      setLostFoundItems(await lostResult.value.json());
+    }
+
+    if (sumoResult.status === "fulfilled" && sumoResult.value.ok) {
+      setSumoItems(await sumoResult.value.json());
+    }
+  }
+
+  loadPublicListings().catch(console.error);
+
+  return () => {
+    cancelled = true;
+  };
+}, []);
 
   return (
     <div className="home-page-template">
@@ -126,6 +158,42 @@ export default function Home() {
           />
         </div>
       </section>
+      {/* PUBLIC SUMO COUNTER ITEMS */}
+<section className="home-media-section" id="sumo-counter-public">
+  <div className="section-header">
+    <span className="gold-badge">COUNTER MARKETPLACE</span>
+    <h2>Items for Sale</h2>
+    <p>Browse items currently advertised by our counter staff.</p>
+  </div>
+  {sumoItems.length === 0 ? (
+    <p className="home-media-empty">No items are currently listed.</p>
+  ) : (
+    <div className="media-grid">
+      {sumoItems.map((item) => (
+        <article className="media-card" key={item.id}>
+          <div className="media-gallery">
+            {item.photos?.map((photo) => (
+              <img
+                key={photo.id}
+                src={photo.url}
+                alt={item.title}
+                loading="lazy"
+              />
+            ))}
+          </div>
+
+          <h3>{item.title}</h3>
+          {item.price !== null && item.price !== "" && (
+            <strong>
+              ₹{Number(item.price).toLocaleString("en-IN")}
+            </strong>
+          )}
+          {item.description && <p>{item.description}</p>}
+        </article>
+      ))}
+    </div>
+  )}
+</section>
       
       {/* 3. Dark Banner Strip */}
       <div className="separator-skew"></div>
@@ -246,6 +314,50 @@ export default function Home() {
        <div className="separator-skew2"></div>
        
       
+{/* PUBLIC LOST & FOUND LISTINGS */}
+<section className="home-media-section" id="lost-found-public">
+  <div className="section-header">
+    <span className="gold-badge">COMMUNITY SERVICE</span>
+    <h2>Lost &amp; Found</h2>
+    <p>See recently reported lost and found items.</p>
+  </div>
+
+  {lostFoundItems.length === 0 ? (
+    <p className="home-media-empty">No current Lost &amp; Found listings.</p>
+  ) : (
+    <div className="media-grid">
+      {lostFoundItems.map((item) => (
+        <article className="media-card" key={item.id}>
+          <h3>{item.title}</h3>
+          {item.location && <p>Location: {item.location}</p>}
+          {item.description && <p>{item.description}</p>}
+
+          <div className="media-gallery">
+            {item.media?.map((file) =>
+              file.type === "video" ? (
+                <video
+                  key={file.id}
+                  src={file.url}
+                  controls
+                  preload="metadata"
+                  playsInline
+                />
+              ) : (
+                <img
+                  key={file.id}
+                  src={file.url}
+                  alt={item.title}
+                  loading="lazy"
+                />
+              )
+            )}
+          </div>
+        </article>
+      ))}
+    </div>
+  )}
+</section>
+
       {/* 7. Footer */}
 		<footer className="site-footer"> <div className="footer-main">
 			<div className="footer-brand">

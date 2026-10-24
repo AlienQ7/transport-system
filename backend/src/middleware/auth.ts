@@ -1,3 +1,4 @@
+//home/alien/backend/src/middleware/auth.ts
 import jwt from "jsonwebtoken";
 import { Context, Next } from "hono";
 

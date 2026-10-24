@@ -1,3 +1,4 @@
+//trasnport-system/src/components/Layout.jsx
 import { useState } from "react";
 import { Link, Outlet, useNavigate, useLocation } from "react-router-dom";
 import "../styles/bookings.css"; 
@@ -147,6 +148,25 @@ export default function Layout() {
 				Scanner
 			</Link>	
 		  )}
+		  {(role === "admin" || role === "staff") && (
+  <>
+    <Link
+      to="/lost-found"
+      className={`nav-link text-white opacity-75 py-2 px-3 ${isActive("/lost-found")}`}
+      onClick={() => setIsSidebarOpen(false)}
+    >
+      Lost & Found
+    </Link>
+
+    <Link
+      to="/sumo-counter"
+      className={`nav-link text-white opacity-75 py-2 px-3 ${isActive("/sumo-counter")}`}
+      onClick={() => setIsSidebarOpen(false)}
+    >
+      Sumo Counter
+    </Link>
+  </>
+)}
           {/* DRIVER LIMITED VIEW once chnage to bookings*/}
           {role === "driver" && (
             <Link

@@ -1,3 +1,4 @@
+//~ //home/alien/transport-system/backend/src/index.ts
 //~ import { Hono } from "hono";
 //~ import { cors } from "hono/cors";
 //~ import auth from "./routes/auth";
@@ -9,6 +10,8 @@
 //~ type Bindings = {
   //~ transport_db: D1Database;
   //~ JWT_SECRET: string;
+  //~ CASHFREE_APP_ID: string;
+  //~ CASHFREE_SECRET_KEY: string;
 //~ };
 
 //~ const app = new Hono<{ Bindings: Bindings }>();
@@ -52,18 +55,19 @@
 //~ app.route("/api/bookings", bookings);
 
 //~ export default app;
-//Adding payment gate 
 
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 import auth from "./routes/auth";
-import { authMiddleware } from "./middleware/auth";
 import routes from "./routes/routes";
 import vehicles from "./routes/vehicles";
 import bookings from "./routes/bookings";
+import media, { cleanupExpiredMedia } from "./routes/media";
 
 type Bindings = {
   transport_db: D1Database;
+  MEDIA_BUCKET: R2Bucket;
+  R2_URL: string;
   JWT_SECRET: string;
   CASHFREE_APP_ID: string;
   CASHFREE_SECRET_KEY: string;
@@ -80,22 +84,16 @@ app.use(
   })
 );
 
-app.get("/health", (c) => {
-  return c.json({ status: "ok" });
-});
+app.get("/health", (c) => c.json({ status: "ok" }));
 
 app.get("/api/stats", async (c) => {
-  const routes = await c.env.transport_db
-    .prepare("SELECT COUNT(*) as count FROM routes")
-    .first();
+  const db = c.env.transport_db;
 
-  const vehicles = await c.env.transport_db
-    .prepare("SELECT COUNT(*) as count FROM vehicles")
-    .first();
-
-  const bookings = await c.env.transport_db
-    .prepare("SELECT COUNT(*) as count FROM bookings")
-    .first();
+  const [routes, vehicles, bookings] = await Promise.all([
+    db.prepare("SELECT COUNT(*) as count FROM routes").first(),
+    db.prepare("SELECT COUNT(*) as count FROM vehicles").first(),
+    db.prepare("SELECT COUNT(*) as count FROM bookings").first(),
+  ]);
 
   return c.json({
     routes: routes?.count || 0,
@@ -108,6 +106,18 @@ app.route("/api/auth", auth);
 app.route("/api/routes", routes);
 app.route("/api/vehicles", vehicles);
 app.route("/api/bookings", bookings);
+app.route("/api/media", media);
 
-export default app;
+export default {
+  fetch(request: Request, env: Bindings, ctx: ExecutionContext) {
+    return app.fetch(request, env, ctx);
+  },
 
+  scheduled(
+    _controller: ScheduledController,
+    env: Bindings,
+    ctx: ExecutionContext
+  ) {
+    ctx.waitUntil(cleanupExpiredMedia(env));
+  },
+};

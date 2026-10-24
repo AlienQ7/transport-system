@@ -1,11 +1,10 @@
+//transport-system/backend/src/routes/routes.ts
 import { Hono } from "hono";
 import { authMiddleware } from "../middleware/auth";
-
 
 const routes = new Hono();
 
 //routes.use("*", authMiddleware);
-
 // Create Route
 routes.post("/", authMiddleware, async (c) => {
   const { source, destination} = await c.req.json();
@@ -21,7 +20,6 @@ routes.post("/", authMiddleware, async (c) => {
     id: result.meta.last_row_id,
   });
 });
-
 // List Routes
 routes.get("/", async (c) => {
   const result = await c.env.transport_db
@@ -30,7 +28,6 @@ routes.get("/", async (c) => {
 
   return c.json(result.results);
 });
-
 // Get Route By ID
 routes.get("/:id", async (c) => {
   const id = c.req.param("id");
@@ -51,7 +48,6 @@ routes.get("/:id", async (c) => {
 
   return c.json(result);
 });
-
 // Update Route
 routes.put("/:id", authMiddleware, async (c) => {
   const id = c.req.param("id");
@@ -71,7 +67,6 @@ routes.put("/:id", authMiddleware, async (c) => {
     success: true,
   });
 });
-
 // Delete Route
 routes.delete("/:id", authMiddleware, async (c) => {
   const id = c.req.param("id");

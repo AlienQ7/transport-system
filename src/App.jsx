@@ -23,6 +23,8 @@ import Contact from "./pages/Contact";
 import PrivacyPolicy from "./pages/PrivacyPolicy"; 
 import RefundPolicy from "./pages/RefundPolicy"; 
 import Terms from "./pages/Terms";
+import LostFound from "./pages/LostFound";
+import SumoCounter from "./pages/SumoCounter";
 
 export default function App() {
   return (
@@ -67,6 +69,25 @@ export default function App() {
       </RoleGuard>
     }
   />
+  {/* ADMIN + STAFF — LOST & FOUND */}
+<Route
+  path="/lost-found"
+  element={
+    <RoleGuard allowedRoles={["admin", "staff"]}>
+      <LostFound />
+    </RoleGuard>
+  }
+/>
+
+{/* ADMIN + STAFF — SUMO COUNTER */}
+<Route
+  path="/sumo-counter"
+  element={
+    <RoleGuard allowedRoles={["admin", "staff"]}>
+      <SumoCounter />
+    </RoleGuard>
+  }
+/>
 
   {/* DRIVER ONLY */}
   <Route
